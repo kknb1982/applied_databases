@@ -1,0 +1,71 @@
+1. Get bus.sql from Moodle and import it into MySQL.
+Done
+
+2. How are the tables in the database related?
+busReg in driver is linked to reg in bus
+
+3. Add the following drivers:
+“Mary”
+INSERT into driver (name) VALUES ("Mary");
+
+
+“Bob” – licence number “RN2423”
+INSERT into driver (name, licenceNo) VALUES ("Bob", "RN2423");
+
+“Sean” – licence number “FF88345” who drives bus “191-G-123”
+INSERT into driver (name, licenceNo, busReg) VALUES ("Sean", "FF88345", "191-G-123");
+
+What happens and why?
+4. Add the following buses:
+"12-G-1323" that can hold up to 34 passengers and runs on "Diesel"
+Duplicate entry for reg
+
+"171-G-885" that can hold up to 84 passengers and runs on "Petrol"
+INSERT INTO `bus`(`reg`, `maxPassengers`, `fuel`) VALUES ('171-G-885', '84', 'Petrol');
+
+"191-D-45890" that can hold up to 120 passengers and runs on "Ethanol"
+INSERT INTO `bus`(`reg`, `maxPassengers`, `fuel`) VALUES ('191-D-45890', '120', 'Ethanol');
+ Warning: #1265 Data truncated for column 'fuel' at row 1
+
+ Because Describe bus shows the allowed entries are Diesel, Petrol and Electric
+
+
+What happens and why?
+5. Update driver’s licences that contain the letters “F” or “R” to have the letters “T-“ before 
+their current licence number.
+UPDATE driver 
+update driver
+set licenceNo = CONCAT("T-",licenceNo)
+where licenceNo like "%F%"
+or licenceNo like "%R%";
+
+6. Delete driver “Alan”. What happens and why?
+Delete from driver Where name = "Alan";
+
+7. Delete bus “161-d-1323”. What happens and why?
+Delete from bus Where reg = "161-d-1323";
+
+8. Get bus2.sql from Moodle and import it into MySQL. To use this database type use bus2;
+
+9. Delete bus “161-d-1323”. What happens and why?
+
+10. Get employees2.sql from Moodle and import it into MySQL. To use this database type use 
+employees2;
+
+11. Show the emp_no, first_name and last_name of employees born in the average year.
+The average year should be rounded down to the nearest whole number. For example,
+• 1949.1 becomes 1949.
+• 1949.9 becomes 1949.
+• 1949.0 becomes 1949.
+
+select emp_no, first_name, last_name from employees
+where year(birth_date) = (
+select floor(avg(year(birth_date))) from employees
+);
+12. Show the emp_no, first_name, last_name and name of the department each employee is in
+select distinct e.emp_no, e.first_name, e.last_name, d.name
+from employees e
+inner join salaries s
+ on e.emp_no = s.emp_no
+inner join dept d
+ on s.dept_no = d.dept_no
