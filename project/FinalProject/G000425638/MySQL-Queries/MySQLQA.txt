@@ -1,0 +1,15 @@
+SELECT 
+    c.CountryName AS Country,
+    COUNT(DISTINCT d.DirectorID) AS `Number of Directors`
+FROM 
+    Director d
+INNER JOIN 
+    Country c ON d.DirectorCountryID = c.CountryID
+INNER JOIN 
+    Film f ON f.FilmDirectorID = d.DirectorID
+WHERE 
+    f.FilmOscarWins > 0
+GROUP BY 
+    c.CountryName
+ORDER BY 
+    c.CountryName ASC;
