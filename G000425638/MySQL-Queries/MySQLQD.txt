@@ -1,0 +1,21 @@
+SELECT 
+    f.FilmName AS Film,
+    CASE 
+        WHEN COUNT(fc.CastActorID) < 5 THEN 'Small'
+        WHEN COUNT(fc.CastActorID) BETWEEN 5 AND 9 THEN 'Medium'
+        ELSE 'Large'
+    END AS Cast
+FROM 
+    Film f
+INNER JOIN 
+    Director d ON d.DirectorID = f.FilmDirectorID
+INNER JOIN 
+    Country c ON c.CountryID = d.DirectorCountryID
+INNER JOIN 
+    FilmCast fc ON fc.CastFilmID = f.FilmID
+WHERE 
+    c.CountryName = 'United Kingdom'
+GROUP BY 
+    f.FilmName
+ORDER BY 
+    f.FilmName ASC;
