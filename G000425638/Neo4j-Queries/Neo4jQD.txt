@@ -1,0 +1,2 @@
+MATCH (s:Student)-[:STUDIES]->(:Course)-[:PROVIDED_BY]->(:Location {location: "Sligo"})
+RETURN round(avg(s.gpa) * 10) / 10.0 AS Avg_Sligo_GPA;

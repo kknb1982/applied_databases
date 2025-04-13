@@ -1,0 +1,7 @@
+MATCH (loc:Location)-[:PART_OF]->(:Institution {name: "Atlantic Technological University"})
+MATCH (course:Course)-[:PROVIDED_BY]->(loc)
+WHERE NOT (course)<-[:STUDIES]-(:Student)
+RETURN 
+  loc.location AS Location, 
+  COUNT(course) AS Empty_Courses
+ORDER BY Empty_Courses DESC, Location ASC;
