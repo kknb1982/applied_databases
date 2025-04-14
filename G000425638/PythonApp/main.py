@@ -1,8 +1,13 @@
 from menu import menu
 from menu1_directors import get_directors_by_name
 from menu2_actor_by_dob import get_birth_month, get_actor_by_month
-from menu3_new_actor import check_actor_ID
+from menu3_new_actor import add_actor
 import mysql.connector as msql
+
+# pip install mysql-connector-python
+# pip install neo4j
+
+con = None
 
 def menu():
     options = "MENU \n 1 - View Directors & Film \n 2 - View Actors by Month of Birth \n 3 - Add New Actor \n 4 - View Married Actors \n 5 - Add Actor Marriage \n 6. View Studios \n x - Exit Application"
@@ -22,7 +27,7 @@ def menu():
         menu()
     
     elif choice == "3":
-        check_actor_ID()
+        add_actor()
         menu()
 
 if __name__ == "__main__":
