@@ -1,0 +1,2 @@
+## Menu 2
+Line 20 takes in only the first 3 letters of a text input
