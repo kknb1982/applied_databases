@@ -1,4 +1,6 @@
-SELECT COUNT(d.DirectorID) AS `Number of Directors`, c.CountryName AS Country
+SELECT 
+    COUNT(DISTINCT d.DirectorID) AS `Number of Directors`, 
+    c.CountryName AS Country
 FROM 
     Director d
 INNER JOIN 
