@@ -16,7 +16,9 @@ def add_actor():
             cursor = con.cursor()
 
             # Check if actor ID already exists
-            cursor.execute("SELECT * FROM actor WHERE ActorID = %s", (actor_id,))
+            sql = "SELECT * FROM actor WHERE ActorID = %s"
+            value = (actor_id,)  # Wrap value in a tuple
+            cursor.execute(sql, value)
             if cursor.fetchone():
                 print(f"Error: Actor ID {actor_id} already exists.")
                 return
