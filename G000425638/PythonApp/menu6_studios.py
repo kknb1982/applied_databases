@@ -42,4 +42,3 @@ def get_studios():
         cursor.close()
         con.close()
         
-get_studios()
