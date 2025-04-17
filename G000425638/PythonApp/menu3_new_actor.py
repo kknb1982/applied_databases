@@ -55,6 +55,7 @@ def add_actor():
             cursor.execute("SELECT * FROM country WHERE CountryID = %s", (country_id,))
             if not cursor.fetchone():
                 print(f"Error: Country ID {country_id} does not exist.")
+                country_id = input("Enter Country ID: ")
                 return
 
             # Insert actor into the Actor table
