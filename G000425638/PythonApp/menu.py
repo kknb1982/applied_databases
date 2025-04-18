@@ -28,8 +28,6 @@ def menu():
             month_num = get_birth_month()
             if month_num:
                 get_actor_by_month(month_num)
-            else:
-                print("Invalid month input. Please try again.")
     
         elif choice == "3":
             add_actor()
