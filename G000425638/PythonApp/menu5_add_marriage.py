@@ -47,7 +47,7 @@ def create_marriage(actor1id, actor2id):
             MATCH (a:Actor {ActorID: $id1}), (b:Actor {ActorID: $id2})
             CREATE (a)-[:MARRIED_TO]->(b)
             """, id1=actor1id, id2=actor2id))
-    print(f"Actor {actor1id} is now married to Actor {actor2id}.")    
+    print(f"Actor {actor1id} is now married to Actor {actor2id}.")
 
 
 def driver_close():
