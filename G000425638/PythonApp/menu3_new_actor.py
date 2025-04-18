@@ -66,7 +66,23 @@ def add_actor():
             cursor.execute(insert_query, (actor_id, name, dob, gender, country_id))
             con.commit()
             print("Actor added successfully!")
-
+            
+            ## Retrieve the new actor's ID from the database
+            sql = "SELECT ActorID FROM Actor WHERE ActorID = %s"
+            value = (actor_id,)  # Wrap value in a tuple
+            cursor.execute(sql, value) 
+            
+            new_actor = cursor.fetchone()
+            if new_actor:
+                print(f"New Actor Record: ")
+                print(f"Actor ID: {new_actor[0]}")
+                print(f"Actor Name: {name}")
+                print(f"Actor DOB: {dob}")
+                print(f"Actor gender: {gender}")
+                print(f"Actor Country ID: {country_id}")
+            else:   
+                print(f"Error: Actor ID {actor_id} not found in the database.")
+    
     except Error as e:
         print(f"Database error: {e}")
     except Exception as ex:
