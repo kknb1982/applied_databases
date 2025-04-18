@@ -153,8 +153,7 @@ def menu():
 							for error in errors:	
 								print(error)
 						else:
-							create_marriage = menu5_add_marriage.create_marriage(actor_id, actor2_id)
-							if create_marriage:
+							if menu5_add_marriage.create_marriage(actor_id, actor2_id):
 								print(f"Marriage created between Actor {actor_id} and Actor {actor2_id}.")
 							else:
 								print(f"Error: Could not create marriage between Actor {actor_id} and Actor {actor2_id}.")
