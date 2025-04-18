@@ -23,8 +23,6 @@ def get_directors_by_name(director_name):
 	cursor.close()
 
 
-
-
 def get_actor_by_month(month_num):
 # Connect to SQL
 	if (not con):
@@ -37,8 +35,9 @@ def get_actor_by_month(month_num):
 	cursor = con.cursor()
 	cursor.execute(sql, (month_num,))
 	results_actor = cursor.fetchall()
+	cursor.close()	
 	return results_actor
-	cursor.close()
+
 
 
 
@@ -53,9 +52,10 @@ def check_actor(actor_id):
 #  Execute the command
 	cursor = con.cursor()
 	cursor.execute(sql, value)
-	results_actor = cursor.fetchall()
-	return results_actor
+	results_actor = cursor.fetchone()
 	cursor.close()
+	return results_actor
+	
 
 
 def check_country(country_id):
@@ -70,8 +70,9 @@ def check_country(country_id):
 	cursor = con.cursor()
 	cursor.execute(sql, value)
 	results_country = cursor.fetchone()
-	return results_country
 	cursor.close()
+	return results_country
+
 
 
 def add_actor(actor_id, name, dob, gender, country_id):
@@ -101,8 +102,9 @@ def show_added_actor(actor_id):
 	cursor	= con.cursor()
 	cursor.execute(sql, value)
 	new_actor = cursor.fetchone()
-	return new_actor
 	cursor.close()
+	return new_actor
+
             
 def get_studios():
 	if (not con):
@@ -114,8 +116,9 @@ def get_studios():
 	cursor	= con.cursor()
 	cursor.execute(sql)
 	studio_cache = cursor.fetchall()
-	return studio_cache
 	cursor.close()
+	return studio_cache
+
 
 def close_connection():
 	global con
