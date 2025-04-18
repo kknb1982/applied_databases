@@ -160,3 +160,9 @@ def menu():
 		except Exception as e:
 			print(f"An error occurred: {e}")
 
+		#finally:
+		#	if con:
+		#		sql_appdbproj.close_connection(con)
+		#	if driver:
+		#		menu5_add_marriage.driver.close()
+
