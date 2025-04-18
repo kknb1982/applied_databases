@@ -75,13 +75,13 @@ def check_country(country_id):
 		
 		if not cursor.fetchone():
 			print(f"Error: Country ID {country_id} does not exist.")
-                country_id = input("Enter Country ID: ")
+			country_id = input("Enter Country ID: ")
 
 
 def add_actor(actor_id, name, dob, gender, country_id):
 # Connect to SQL
 	if (not con):
-	connect();    
+		connect();    
 # Add actor
 	sql = "INSERT INTO Actor (ActorID, ActorName, ActorDOB, ActorGender, ActorCountryID) VALUES (%s, %s, %s, %s, %s)"
 	values = (actor_id, name, dob, gender, country_id)
@@ -118,3 +118,8 @@ def get_studios():
 		cursor.execute(sql)
 		studio_cache = cursor.fetchall()
 		return studio_cache
+
+def close_connection():
+	if con:
+		con.close()
+		con = None
