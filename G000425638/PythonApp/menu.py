@@ -51,9 +51,9 @@ def menu():
 					results_actor = sql_appdbproj.get_actor_by_month(month_num)
 					print(f"Details for Actors Born in {month_num}:")
 					for actor in results_actor:
-						dob = actor["ActorDOB"]
-						# Format the date to DD-MM-YYYY
-						formatted_dob = datetime.strftime('%d-%m-%Y')
+						if isinstance(dob, str):
+							dob = datetime.strptime(dob, '%Y-%m-%d')  # Convert string to datetime
+						formatted_dob = dob.strftime('%d-%m-%Y')  # Format the date						dob = actor["ActorDOB"]
 						print(actor["Name"], "|", formatted_dob, "|", actor["gender"])
 						break
 					else:
