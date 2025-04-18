@@ -61,7 +61,7 @@ def menu():
 			elif choice == "3":
 				actor_id = input("Enter Actor ID: ")
 				actor = sql_appdbproj.check_actor(actor_id)
-				if actor is not None:
+				if results_actor is not None:
 					print(f"Error: Actor ID {actor_id} already exists.")
 				else:
 					name = input("Enter Actor Name: ")
