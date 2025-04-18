@@ -23,7 +23,6 @@ def menu():
     
         if choice == "1":
             get_directors_by_name()
-            menu()
     
         elif choice == "2":
             month_num = get_birth_month()
@@ -31,15 +30,12 @@ def menu():
                 get_actor_by_month(month_num)
             else:
                 print("Invalid month input. Please try again.")
-            menu()
     
         elif choice == "3":
             add_actor()
-            menu()
         
         elif choice == "4":
             check_marriage()
-            menu()
         
         elif choice == "5": 
             user_input = input("Enter the Actor ID to check for marriages: ")
@@ -64,12 +60,10 @@ def menu():
         
         elif choice == "6":
             get_studios()
-            menu()
-        
+            
         elif choice == "x":
             print("Exiting application...")
-            return 
+            break
         
         else:
             print(f"Invalid choice. Please try again.")
-            menu()
