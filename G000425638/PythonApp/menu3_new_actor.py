@@ -17,45 +17,35 @@ def add_actor():
 
             # Check if actor ID already exists
             sql = "SELECT * FROM actor WHERE ActorID = %s"
-            value = (actor_id,)  # Wrap value in a tuple
+            value = (actor_id,)  
             cursor.execute(sql, value)
             if cursor.fetchone():
                 print(f"Error: Actor ID {actor_id} already exists.")
                 return
 
-        name = input("Enter Actor Name: ")
-        dob = input("Enter Actor Date of Birth (YYYY-MM-DD): ")
-        
-        # Validate date format
-        try:
-            datetime.strptime(dob, '%Y-%m-%d')
-        except ValueError:
-            print("Incorrect date format, should be YYYY-MM-DD")
+            name = input("Enter Actor Name: ")
             dob = input("Enter Actor Date of Birth (YYYY-MM-DD): ")
         
-        gender = input("Enter Actor Gender: ")
-        if gender not in ['Male', 'Female', 'M', 'F']:
+            # Validate date format
+            try:
+                datetime.strptime(dob, '%Y-%m-%d')
+            except ValueError:
+                print("Incorrect date format, should be YYYY-MM-DD")
+                return
+        
+            gender = input("Enter Actor Gender: ").strip()
             while gender not in ['Male', 'Female', 'M', 'F']:
                 print("Invalid gender. Please enter 'M', 'F', 'Male', or 'Female'.")
                 gender = input("Enter Actor Gender (M/F): ")
-            if gender == 'M':
-                gender = "Male"
-            elif gender == 'F':
-                gender = "Female"
-                        
-        country_id = input("Enter Country ID: ")
+            
+            gender = "Male" if gender in ['M', 'Male'] else "Female"
 
-        # Connect to the MySQL database
-        con = msql.connect(host='localhost', database='appdbproj', user='root', password='') 
-
-        if con.is_connected():
-            cursor = con.cursor()
+            country_id = input("Enter Country ID: ")
 
             # Check if country ID exists
             cursor.execute("SELECT * FROM country WHERE CountryID = %s", (country_id,))
             if not cursor.fetchone():
                 print(f"Error: Country ID {country_id} does not exist.")
-                country_id = input("Enter Country ID: ")
                 return
 
             # Insert actor into the Actor table
@@ -68,11 +58,11 @@ def add_actor():
             print("Actor added successfully!")
             
             ## Retrieve the new actor's ID from the database
-            sql = "SELECT ActorID FROM Actor WHERE ActorID = %s"
-            value = (actor_id,)  # Wrap value in a tuple
-            cursor.execute(sql, value) 
-            
+            sql = "SELECT * FROM actor WHERE ActorID = %s"
+            value = (actor_id,)  
+            cursor.execute(sql, value)
             new_actor = cursor.fetchone()
+            
             if new_actor:
                 print(f"New Actor Record: ")
                 print(f"Actor ID: {new_actor[0]}")
