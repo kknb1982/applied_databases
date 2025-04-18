@@ -55,7 +55,7 @@ def check_actor(actor_id):
 		cursor = con.cursor()
 		cursor.execute(sql, value)
 		results_actor = cursor.fetchall()
-		return check_actor
+		return results_actor
 
 
 def check_country(country_id):
@@ -71,7 +71,7 @@ def check_country(country_id):
 		cursor = con.cursor()
 		cursor.execute(sql, value)
 		results_country = cursor.fetchone()
-		return check_country
+		return results_country
 		
 		if not cursor.fetchone():
 			print(f"Error: Country ID {country_id} does not exist.")

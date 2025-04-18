@@ -152,6 +152,8 @@ def menu():
 
 			elif choice == "x":
 				print("Exiting application...")
+				sql_appdbproj.close_connection(con)			
+				menu5_add_marriage.driver.close()
 				break
 
 			else:
@@ -159,10 +161,3 @@ def menu():
 
 		except Exception as e:
 			print(f"An error occurred: {e}")
-
-		#finally:
-		#	if con:
-		#		sql_appdbproj.close_connection(con)
-		#	if driver:
-		#		menu5_add_marriage.driver.close()
-
