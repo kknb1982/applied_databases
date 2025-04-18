@@ -24,7 +24,7 @@ def was_divorced(actor_id):
     with driver.session() as session:
         result = session.execute_read(lambda tx: tx.run(
             """
-            MATCH (a:Actor {ActorID: $id1})-[:DIVORCED_FROM]-(b:Actor)
+            MATCH (a:Actor {ActorID: $id})-[:DIVORCED_FROM]-(b:Actor)
             RETURN a
             """, id=actor_id).single())
         return result is not None
