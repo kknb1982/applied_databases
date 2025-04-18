@@ -20,7 +20,7 @@ def is_actor_married(actor_id):
             """, id=actor_id).single())
         return result is not None
 
-def was_divorced(actor1id, actor2id):
+def was_divorced(actor_id):
     with driver.session() as session:
         result = session.execute_read(lambda tx: tx.run(
             """
