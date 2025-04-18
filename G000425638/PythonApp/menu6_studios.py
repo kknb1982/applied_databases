@@ -1,7 +1,7 @@
 import mysql.connector as msql
 
 # Create a cache
-studio_cache = None
+
 
 def get_studios():
     global studio_cache

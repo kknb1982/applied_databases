@@ -4,6 +4,7 @@ import menu5_add_marriage
 
 
 from datetime import datetime
+studio_cache = None
 
 def get_birth_month(input_month):
 	month_lookup = {'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4, 'may': 5, 'jun': 6, 'jul': 7, 'aug': 8, 'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12}
@@ -72,7 +73,7 @@ def menu():
 						datetime.strptime(dob, '%Y-%m-%d')
 					except ValueError:
 						print("Incorrect date format, should be YYYY-MM-DD")
-						return
+						dob = input("Enter Actor Date of Birth (YYYY-MM-DD): ")
 
 					gender = input("Enter Actor Gender: ").strip()
 					while gender not in ['Male', 'Female', 'M', 'F']:
@@ -86,12 +87,13 @@ def menu():
 						sql_appdbproj.add_actor(actor_id, name, dob, gender, country_id)
 						new_actor = sql_appdbproj.show_added_actor(actor_id)
 						if new_actor:
-							print(f"New Actor Record: ")
-							print(f"Actor ID: {new_actor[0]}")
-							print(f"Actor Name: {name}")
-							print(f"Actor DOB: {dob}")
-							print(f"Actor gender: {gender}")
-							print(f"Actor Country ID: {country_id}")
+							print("Actor successfully added")
+							print(f"Actor ID: {new_actor['ActorID']}")
+							print(f"Actor Name: {new_actor['ActorName']}")
+							print(f"Actor DOB: {new_actor['ActorDOB']}")
+							print(f"Actor gender: {new_actor['ActorGender']}")
+							print(f"Actor Country ID: {new_actor['ActorCountryID']}")
+
 						else:
 							print(f"Error: Actor ID {actor_id} not found in the database.")
 						break
