@@ -38,4 +38,3 @@ def get_directors_by_name():
     finally:
         cursor.close()
         con.close()
-    

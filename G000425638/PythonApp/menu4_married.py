@@ -28,6 +28,3 @@ def find_marriage(tx, actor_id):
     """
     return list(tx.run(query, actor_id=int(actor_id)))
 
-# --- Run the script
-user_input = input("Enter the Actor ID to check for marriages: ")
-check_marriage(user_input)
