@@ -53,7 +53,7 @@ def menu():
 					for actor in results_actor:
 						dob = actor["ActorDOB"]
 						# Format the date to DD-MM-YYYY
-						formatted_dob = datetime.strptime(dob, '%Y-%m-%d').strftime('%d-%m-%Y')
+						formatted_dob = datetime.strftime('%d-%m-%Y')
 						print(actor["Name"], "|", formatted_dob, "|", actor["gender"])
 						break
 					else:
