@@ -67,7 +67,8 @@ def menu():
             menu()
         
         elif choice == "x":
-            print("Exiting application...") 
+            print("Exiting application...")
+            return 
         
         else:
             print(f"Invalid choice. Please try again.")
