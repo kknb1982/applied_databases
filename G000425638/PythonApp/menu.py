@@ -124,26 +124,26 @@ def menu():
 						
 					else:
 						print(f"Actor {actor_id} is not married.")
-					break
+						break
 				
 			
 			elif choice == "5":
 				actor_id = input("Enter the Actor ID to check for marriages: ")
-				actor1 = menu4_married.actor_exists(actor_id)
+				actor1 = menu5_add_marriage.check_actor_exists(actor_id)
 				if actor1 is None:
 					print(f"Error: Actor ID {actor1} does not exist.")
 					break
 				else:
 					actor2_id = input("Enter the second Actor ID to check for marriages: ")
-					actor2 = menu4_married.actor_exists(actor2_id)
+					actor2 = menu5_add_marriage.check_actor_exists(actor2_id)
 					if actor2 is None:
 						print(f"Error: Actor ID {actor2_id} does not exist.")
 						break
 					else:
-						married1 = menu4_married.is_actor_married(actor_id)
-						married2 = menu4_married.is_actor_married(actor2_id)
-						divorced1 = menu4_married.has_been_divorced(actor_id)
-						divorced2 = menu4_married.has_been_divorced(actor2_id)
+						married1 = menu5_add_marriage.is_actor_married(actor_id)
+						married2 = menu5_add_marriage.is_actor_married(actor2_id)
+						divorced1 = menu5_add_marriage.was_divorced(actor_id)
+						divorced2 = menu5_add_marriage.was_divorced(actor2_id)
 						errors = []
 						if married1 and not divorced1:
 							errors.append(f"Actor {actor_id} is already married and hasn't been divorced.")
@@ -153,7 +153,7 @@ def menu():
 							for error in errors:	
 								print(error)
 						else:
-							create_marriage = menu4_married.create_marriage(actor_id, actor2_id)
+							create_marriage = menu5_add_marriage.create_marriage(actor_id, actor2_id)
 							if create_marriage:
 								print(f"Marriage created between Actor {actor_id} and Actor {actor2_id}.")
 							else:
