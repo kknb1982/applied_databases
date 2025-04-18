@@ -11,15 +11,19 @@ def get_birth_month(input_month):
 # If the input is a number check it is between 1 and 12
 	if input_month.isdigit():
 		month_num = int(input_month)
-	if 1 <= month_num <= 12:
-		print(f"Valid input: Month number {month_num}")
-		return month_num
+		if 1 <= month_num <= 12:
+			print(f"Valid input: Month number {month_num}")
+			return month_num
+		else:
+			print("Invalid input. Please enter a number (1–12) or the first three letters of a month (e.g., Jan, Feb, Mar).")
+			return None
 	elif input_month[:3] in month_lookup:
 		month_num = month_lookup[input_month[:3]]
 		print(f"Valid input: Month number {month_num}")
 		return month_num
 	else:
 		print("Invalid input. Please enter a number (1–12) or the first three letters of a month (e.g., Jan, Feb, Mar).")
+		return None
 
 # Create the options menu
 def menu():
@@ -42,16 +46,17 @@ def menu():
 			elif choice == "2":
 				input_month = input("Enter the month of birth you are interested in (1-12 or Jan-Dec): ").strip().lower()
 				month_num = get_birth_month(input_month)
-				results_actor = sql_appdbproj.get_actor_by_month(month_num)
-				print(f"Details for Actors Born in {month_num}:")
-				for actor in results_actor:
-					dob = actor["ActorDOB"]
-					# Format the date to DD-MM-YYYY
-					formatted_dob = datetime.strptime(dob, '%Y-%m-%d').strftime('%d-%m-%Y')
-					print(actor["Name"], "|", formatted_dob, "|", actor["gender"])
-					break
-				else:
-					print(f"No results found for actors born in {month_num}.")	
+				if month_num:
+					results_actor = sql_appdbproj.get_actor_by_month(month_num)
+					print(f"Details for Actors Born in {month_num}:")
+					for actor in results_actor:
+						dob = actor["ActorDOB"]
+						# Format the date to DD-MM-YYYY
+						formatted_dob = datetime.strptime(dob, '%Y-%m-%d').strftime('%d-%m-%Y')
+						print(actor["Name"], "|", formatted_dob, "|", actor["gender"])
+						break
+					else:
+						print(f"No results found for actors born in {month_num}.")	
 
 			elif choice == "3":
 				actor_id = input("Enter Actor ID: ")
