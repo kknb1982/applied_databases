@@ -122,16 +122,21 @@ def menu():
 							spouse = sql_appdbproj.get_actor_by_id(spouse_id)
 							print(f"{spouse['ActorID']} | {spouse['ActorName']}")
 						
+						# Check if the actor has been divorced
+						divorced = menu5_add_marriage.was_divorced(actor_id)
+						if divorced:
+							print(f"Actor {actor_id} has been divorced.")
+						else:
+							print(f"Actor {actor_id} has not been divorced.")
 					else:
 						print(f"Actor {actor_id} is not married.")
-						break
+					break
 				
-			
 			elif choice == "5":
 				actor_id = input("Enter the Actor ID to check for marriages: ")
 				actor1 = menu5_add_marriage.check_actor_exists(actor_id)
 				if actor1 is None:
-					print(f"Error: Actor ID {actor1} does not exist.")
+					print(f"Error: Actor ID {actor_id} does not exist.")
 					break
 				else:
 					actor2_id = input("Enter the second Actor ID to check for marriages: ")
@@ -150,14 +155,14 @@ def menu():
 						if married2 and not divorced2:
 							errors.append(f"Actor {actor2_id} is already married and hasn't been divorced.")
 						if errors:
-							for error in errors:	
+							for error in errors:
 								print(error)
 						else:
 							if menu5_add_marriage.create_marriage(actor_id, actor2_id):
 								print(f"Marriage created between Actor {actor_id} and Actor {actor2_id}.")
 							else:
 								print(f"Error: Could not create marriage between Actor {actor_id} and Actor {actor2_id}.")
-							break
+						break
 				
 			elif choice == "6":
 				global studio_cache
