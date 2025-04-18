@@ -51,10 +51,11 @@ def menu():
 					results_actor = sql_appdbproj.get_actor_by_month(month_num)
 					print(f"Details for Actors Born in {month_num}:")
 					for actor in results_actor:
+						dob = actor["ActorDOB"]
 						if isinstance(dob, str):
 							dob = datetime.strptime(dob, '%Y-%m-%d')  # Convert string to datetime
 						formatted_dob = dob.strftime('%d-%m-%Y')  # Format the date						dob = actor["ActorDOB"]
-						print(actor["Name"], "|", formatted_dob, "|", actor["gender"])
+						print(actor["ActorName"], "|", formatted_dob, "|", actor["ActorGender"])
 						break
 					else:
 						print(f"No results found for actors born in {month_num}.")	
@@ -81,21 +82,27 @@ def menu():
 						gender = input("Enter Actor Gender (M/F): ")
 						gender = "Male" if gender in ['M', 'Male'] else "Female"
 					
-					country_id = input("Enter Country ID: ")
-					sql_appdbproj.check_country(country_id)
 					while True:
-						sql_appdbproj.add_actor(actor_id, name, dob, gender, country_id)
-						new_actor = sql_appdbproj.show_added_actor(actor_id)
-						if new_actor:
-							print("Actor successfully added")
-							print(f"Actor ID: {new_actor['ActorID']}")
-							print(f"Actor Name: {new_actor['ActorName']}")
-							print(f"Actor DOB: {new_actor['ActorDOB']}")
-							print(f"Actor gender: {new_actor['ActorGender']}")
-							print(f"Actor Country ID: {new_actor['ActorCountryID']}")
-
+						country_id = input("Enter Country ID: ")
+						country = sql_appdbproj.check_country(country_id)					
+						if country is None:
+							print(f"Error: Country ID {country_id} does not exist.")
 						else:
-							print(f"Error: Actor ID {actor_id} not found in the database.")
+							break
+
+					sql_appdbproj.add_actor(actor_id, name, dob, gender, country_id)
+											
+					new_actor = sql_appdbproj.show_added_actor(actor_id)
+					if new_actor:
+						print("Actor successfully added")
+						print(f"Actor ID: {new_actor['ActorID']}")
+						print(f"Actor Name: {new_actor['ActorName']}")
+						print(f"Actor DOB: {new_actor['ActorDOB']}")
+						print(f"Actor gender: {new_actor['ActorGender']}")
+						print(f"Actor Country ID: {new_actor['ActorCountryID']}")
+
+					else:
+						print(f"Error: Actor ID {actor_id} not found in the database.")
 						break
 			
 			elif choice == "4":
