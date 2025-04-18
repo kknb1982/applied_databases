@@ -67,15 +67,11 @@ def check_country(country_id):
 	value = (country_id,)
 
 #  Execute the command
-	with con:
-		cursor = con.cursor()
-		cursor.execute(sql, value)
-		results_country = cursor.fetchone()
-		return results_country
-		
-		if not cursor.fetchone():
-			print(f"Error: Country ID {country_id} does not exist.")
-			country_id = input("Enter Country ID: ")
+	cursor = con.cursor()
+	cursor.execute(sql, value)
+	results_country = cursor.fetchone()
+	return results_country
+	cursor.close()
 
 
 def add_actor(actor_id, name, dob, gender, country_id):
@@ -87,12 +83,12 @@ def add_actor(actor_id, name, dob, gender, country_id):
 	values = (actor_id, name, dob, gender, country_id)
 
 #  Execute the command
-	with con:
-		cursor = con.cursor()
-		cursor.execute(sql, values)
-		con.commit()
-		print("Actor added successfully!")
-            
+	cursor = con.cursor()
+	cursor.execute(sql, values)
+	con.commit()
+	print("Actor added successfully!")
+	cursor.close()
+ 
 def show_added_actor(actor_id):
 # Connect to SQL
 	if (not con):
@@ -101,11 +97,12 @@ def show_added_actor(actor_id):
 	sql = "SELECT * FROM actor WHERE ActorID = %s"
 	value = (actor_id,)  
 		
-	with con:
-		cursor	= con.cursor()
-		cursor.execute(sql, value)
-		new_actor = cursor.fetchone()
-		return new_actor
+
+	cursor	= con.cursor()
+	cursor.execute(sql, value)
+	new_actor = cursor.fetchone()
+	return new_actor
+	cursor.close()
             
 def get_studios():
 	if (not con):
@@ -113,11 +110,12 @@ def get_studios():
 	# Command to select the data from the table
 	sql = "SELECT StudioID, StudioName FROM studio ORDER BY StudioID ASC"
 		
-	with con:
-		cursor	= con.cursor()
-		cursor.execute(sql)
-		studio_cache = cursor.fetchall()
-		return studio_cache
+
+	cursor	= con.cursor()
+	cursor.execute(sql)
+	studio_cache = cursor.fetchall()
+	return studio_cache
+	cursor.close()
 
 def close_connection():
 	if con:
