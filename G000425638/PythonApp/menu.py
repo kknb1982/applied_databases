@@ -157,6 +157,6 @@ def menu():
 			else:
 				print(f"Invalid choice. Please try again.")
 
-	except Exception as e:
-		print(f"An error occurred: {e}")
+		except Exception as e:
+			print(f"An error occurred: {e}")
 
