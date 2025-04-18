@@ -116,7 +116,7 @@ def menu():
 					if married:
 						print("These actors are married:")
 						for record in married:
-							print(f"{record["ActorID"]} | {record["ActorName"]}")
+							print(f"{record['ActorID']} | {record['ActorName']}")
 							print(f"{record['SpouseID']} | {record['SpouseName']}")
 							break
 						else:
