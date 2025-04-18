@@ -4,7 +4,7 @@ con = None
 
 def connect():
 	global con
-	con = pymysql.connect(host='localhost', database='appdbproj', user='root', password='', cusorclass=pymysql.cursors.DictCursor) 
+	con = pymysql.connect(host='localhost', database='appdbproj', user='root', password='', cursorclass=pymysql.cursors.DictCursor) 
 
 # Get directors by name function
 def get_directors_by_name(director_name):

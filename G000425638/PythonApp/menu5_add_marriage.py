@@ -50,5 +50,6 @@ def create_marriage(tx, actor1id, actor2id):
     print(f"Actor {actor1id} is now married to Actor {actor2id}.")    
 
 
-
-driver.close()
+def driver_close():
+    if driver:
+        driver.close()
