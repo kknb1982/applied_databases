@@ -45,7 +45,7 @@ def menu():
 				results_actor = sql_appdbproj.get_actor_by_month(month_num)
 				print(f"Details for Actors Born in {month_num}:")
 				for actor in results_actor:
-					dob = actor["dob"]
+					dob = actor["ActorDOB"]
 					# Format the date to DD-MM-YYYY
 					formatted_dob = datetime.strptime(dob, '%Y-%m-%d').strftime('%d-%m-%Y')
 					print(actor["Name"], "|", formatted_dob, "|", actor["gender"])
