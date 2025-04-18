@@ -159,7 +159,7 @@ def menu():
 				else:
 					print("Using cached studio data.")
 				for studio in studio_cache:
-						print(studio)
+						print(f"Studio ID: {studio['StudioID']} | Studio Name: {studio['StudioName']}")
 
 			elif choice == "x":
 				print("Exiting application...")
