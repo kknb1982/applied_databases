@@ -95,7 +95,7 @@ def menu():
 					new_actor = sql_appdbproj.show_added_actor(actor_id)
 					if new_actor:
 						print("Actor successfully added")
-						print(f"Actor ID: {new_actor['ActorID']}")
+						print(f"Actor ID: {new_actor['ActorID']}", "|", )
 						print(f"Actor Name: {new_actor['ActorName']}")
 						print(f"Actor DOB: {new_actor['ActorDOB']}")
 						print(f"Actor gender: {new_actor['ActorGender']}")

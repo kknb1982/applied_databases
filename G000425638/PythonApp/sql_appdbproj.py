@@ -82,14 +82,13 @@ def add_actor(actor_id, name, dob, gender, country_id):
 # Add actor
 	sql = "INSERT INTO Actor (ActorID, ActorName, ActorDOB, ActorGender, ActorCountryID) VALUES (%s, %s, %s, %s, %s)"
 	values = (actor_id, name, dob, gender, country_id)
-
+	print(values)
 #  Execute the command
 	cursor = con.cursor()
 	cursor.execute(sql, values)
 	con.commit()
-	print("Actor added successfully!")
 	cursor.close()
- 
+
 def show_added_actor(actor_id):
 # Connect to SQL
 	if (not con):
