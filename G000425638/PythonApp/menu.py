@@ -152,10 +152,15 @@ def menu():
 
 			elif choice == "x":
 				print("Exiting application...")
-				if con:
-					sql_appdbproj.close_connection()			
-				if menu5_add_marriage.driver():
+				try:
+					sql_appdbproj.close_connection()
+				except Exception as e:
+					print(f"(Optional) Could not close SQL connection: {e}")
+				try:
 					menu5_add_marriage.driver.close()
+				except Exception as e:
+					print(f"(Optional) Could not close Neo4j driver: {e}")
+
 				break
 
 			else:

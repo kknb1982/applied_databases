@@ -118,6 +118,7 @@ def get_studios():
 	cursor.close()
 
 def close_connection():
+	global con
 	if con:
 		con.close()
 		con = None
