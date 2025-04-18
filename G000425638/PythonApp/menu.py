@@ -153,10 +153,12 @@ def menu():
 			elif choice == "6":
 				global studio_cache
 				# Check if the cache is empty
-				if studio_cache is not None:
-					print("Using cached data.")
-					sql_appdbproj.get_studios()
-					for studio in studio_cache:
+				if studio_cache is None:
+					print("Fetching studio data from the database...")
+					studio_cache = sql_appdbproj.get_studios()
+				else:
+					print("Using cached studio data.")
+				for studio in studio_cache:
 						print(studio)
 
 			elif choice == "x":
