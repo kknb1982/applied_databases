@@ -40,7 +40,7 @@ def get_valid_actor(prompt_text):
         except ValueError:
             print("Please enter a valid numeric ID.")
 
-def create_marriage(tx, actor1id, actor2id):
+def create_marriage(actor1id, actor2id):
     with driver.session() as session:
         session.execute_write(lambda tx: tx.run(
             """

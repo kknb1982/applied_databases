@@ -116,11 +116,11 @@ def menu():
 					if married:
 						print("These actors are married:")
 						actor = sql_appdbproj.get_actor_by_id(actor_id)
-						print(actor)
+						print(f"{actor['ActorID']} | {actor['ActorName']}")
 						for record in married:
 							spouse_id = record['SpouseID']  # Extract SpouseID from the result
 							spouse = sql_appdbproj.get_actor_by_id(spouse_id)
-							print(spouse)
+							print(f"{spouse['ActorID']} | {spouse['ActorName']}")
 						
 					else:
 						print(f"Actor {actor_id} is not married.")
@@ -169,7 +169,7 @@ def menu():
 				else:
 					print("Using cached studio data.")
 				for studio in studio_cache:
-						print(f"Studio ID: {studio['StudioID']} | Studio Name: {studio['StudioName']}")
+						print(f"{studio['StudioID']} | {studio['StudioName']}")
 
 			elif choice == "x":
 				print("Exiting application...")
