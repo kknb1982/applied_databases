@@ -15,12 +15,12 @@ def get_directors_by_name(director_name):
 	sql = "SELECT d.DirectorName, f.FilmName, s.StudioName FROM director d JOIN film f ON d.DirectorID = f.FilmDirectorID JOIN studio s ON f.FilmStudioID = s.StudioID WHERE d.DirectorName LIKE %s"
 
 #  Execute the command
-	with con:
-		cursor = con.cursor()
-		cursor.execute(sql, ('%' + director_name + '%',))
+	cursor = con.cursor()
+	cursor.execute(sql, ('%' + director_name + '%',))
 # Fetch the results
-		director_results = cursor.fetchall()
-		return director_results
+	director_results = cursor.fetchall()
+	return director_results
+	cursor.close()
 
 
 
@@ -34,11 +34,11 @@ def get_actor_by_month(month_num):
 	month_num = int(month_num) 
 
 #  Execute the command
-	with con:
-		cursor = con.cursor()
-		cursor.execute(sql, (month_num,))
-		results_actor = cursor.fetchall()
-		return results_actor
+	cursor = con.cursor()
+	cursor.execute(sql, (month_num,))
+	results_actor = cursor.fetchall()
+	return results_actor
+	cursor.close()
 
 
 
@@ -51,11 +51,11 @@ def check_actor(actor_id):
 	value = (actor_id,)  
         
 #  Execute the command
-	with con:
-		cursor = con.cursor()
-		cursor.execute(sql, value)
-		results_actor = cursor.fetchall()
-		return results_actor
+	cursor = con.cursor()
+	cursor.execute(sql, value)
+	results_actor = cursor.fetchall()
+	return results_actor
+	cursor.close()
 
 
 def check_country(country_id):
