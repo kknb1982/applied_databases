@@ -124,3 +124,17 @@ def close_connection():
 	if con:
 		con.close()
 		con = None
+
+def get_actor_by_id(actor_id):
+# Connect to SQL
+	if (not con):
+		connect();    
+	sql = "SELECT ActorID, ActorName FROM actor WHERE ActorID = %s"
+	value = (actor_id,)  
+        
+#  Execute the command
+	cursor = con.cursor()
+	cursor.execute(sql, value)
+	actor_details = cursor.fetchone()
+	cursor.close()
+	return actor_details
