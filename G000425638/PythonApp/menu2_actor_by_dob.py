@@ -50,13 +50,16 @@ def get_actor_by_month(month_num):
 
         if results:
             print(f"Details for Actors Born in {month_num}:")
-            for row in results:
-                print(row)
+            for name, dob, gender in results:
+                # Format the date to YYYY-MM-DD
+                formatted_dob = dob.strftime('%Y-%m-%d')
+                print(f"{name} {formatted_dob} {gender}")
         else:
             print(f"No results found for actors born in {month_num}.")
             
     except msql.Error as err:
         print(f"Error: {err}")
+    
     finally:
         cursor.close()
         con.close()
