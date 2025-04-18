@@ -130,7 +130,6 @@ def menu():
 							print(f"Actor {actor_id} has not been divorced.")
 					else:
 						print(f"Actor {actor_id} is not married.")
-					break
 				
 			elif choice == "5":
 				actor_id = input("Enter the Actor ID to check for marriages: ")
@@ -162,7 +161,6 @@ def menu():
 								print(f"Marriage created between Actor {actor_id} and Actor {actor2_id}.")
 							else:
 								print(f"Error: Could not create marriage between Actor {actor_id} and Actor {actor2_id}.")
-						break
 				
 			elif choice == "6":
 				global studio_cache
