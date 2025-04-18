@@ -115,12 +115,13 @@ def menu():
 					married = menu4_married.find_spouse(actor_id)
 					if married:
 						print("These actors are married:")
-						for record in married:
-							print(f"{record['ActorID']} | {record['ActorName']}")
-							print(f"{record['SpouseID']} | {record['SpouseName']}")
-							break
-						else:
-							print(f"Actor {actor_id} is not married.")
+						actor = sql_appdbproj.get_actor_by_id(actor_id)
+						print(actor)
+						spouse = sql_appdbproj.get_actor_by_id(married)
+						print(spouse)
+						
+					else:
+						print(f"Actor {actor_id} is not married.")
 					break
 				
 			
