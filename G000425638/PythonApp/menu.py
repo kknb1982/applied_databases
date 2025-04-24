@@ -21,7 +21,6 @@ def get_birth_month(input_month):
 			
 		elif input_month[:3] in month_lookup:
 			month_num = month_lookup[input_month[:3]]
-			print(f"Valid input: Month number {month_num}")
 			return month_num
 		else:
 			print("Enter month: ")
@@ -31,7 +30,7 @@ def get_birth_month(input_month):
 def menu():
 	while True:
 		try:
-			options = "\nMENU \n ====\n 1 - View Directors & Film \n 2 - View Actors by Month of Birth \n 3 - Add New Actor \n 4 - View Married Actors \n 5 - Add Actor Marriage \n 6 - View Studios \n x - Exit Application"
+			options = "\nMENU \n====\n 1 - View Directors & Film \n 2 - View Actors by Month of Birth \n 3 - Add New Actor \n 4 - View Married Actors \n 5 - Add Actor Marriage \n 6 - View Studios \n x - Exit Application"
 			print(options)
 
 			choice = input("Choice: ")
@@ -39,7 +38,7 @@ def menu():
 			if choice == "1":
 				director_name = input("Enter director name: ")
 				directors = sql_appdbproj.get_directors_by_name(director_name)
-				print(f"Details for Director: {director_name} \n -------------------------------")
+				print(f"Details for Director: {director_name} \n ------------")
 				if not directors:
 					print("No directors found of that name.")
 					continue
@@ -76,11 +75,13 @@ def menu():
 					dob = input("Enter Actor Date of Birth (YYYY-MM-DD): ")
 					
 					# Validate date format
-					try:
-						datetime.strptime(dob, '%Y-%m-%d')
-					except ValueError:
-						print("Incorrect date format, should be YYYY-MM-DD")
-						dob = input("Enter Actor Date of Birth (YYYY-MM-DD): ")
+					while True:
+						try:
+							dob = datetime.strptime(dob, '%Y-%m-%d')
+							break  # Exit the loop if the date is valid
+						except ValueError:
+							print("Incorrect date format, should be YYYY-MM-DD")
+							dob = input("Enter Actor Date of Birth (YYYY-MM-DD): ")
 
 					gender = input("Enter Actor Gender: ").strip()
 					while gender not in ['Male', 'Female', 'M', 'F']:
