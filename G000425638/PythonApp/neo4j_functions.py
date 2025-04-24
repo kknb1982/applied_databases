@@ -41,13 +41,16 @@ def get_valid_actor(prompt_text):
             print("Please enter a valid numeric ID.")
 
 def create_marriage(actor1id, actor2id):
+    actor1id = int(actor1id)
+    actor2id = int(actor2id)
     with driver.session() as session:
         session.execute_write(lambda tx: tx.run(
             """
-            MATCH (a:Actor {ActorID: $id1}), (b:Actor {ActorID: $id2})
-            CREATE (a)-[:MARRIED_TO]->(b)
+            MERGE (a:Actor {ActorID: $id1})
+            MERGE (b:Actor {ActorID: $id2})
+            MERGE (a)-[:MARRIED_TO]->(b)
             """, id1=actor1id, id2=actor2id))
-        return True
+    return True
 
 def find_spouse(actor_id):
     with driver.session() as session:
