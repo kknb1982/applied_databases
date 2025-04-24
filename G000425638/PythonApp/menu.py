@@ -101,7 +101,7 @@ def menu():
 											
 					new_actor = sql_appdbproj.show_added_actor(actor_id)
 					if new_actor:
-						print("Actor successfully added")
+						print("\nActor successfully added")
 						print(f"Actor ID: {new_actor['ActorID']}", "|", )
 						print(f"Actor Name: {new_actor['ActorName']}")
 						print(f"Actor DOB: {new_actor['ActorDOB']}")
@@ -113,7 +113,7 @@ def menu():
 						break
 			
 			elif choice == "4":
-				actor_id = input("ACtor ID: ")
+				actor_id = input("Actor ID: ")
 				actor = menu5_add_marriage.check_actor_exists(int(actor_id))
 				if actor is None:
 					print(f"Error: Actor ID {actor_id} does not exist.")
