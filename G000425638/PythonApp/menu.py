@@ -143,7 +143,7 @@ def menu():
 				# Prompt for Actor 2 ID
 					actor2_id = input("Enter Actor 2 ID: ")
 					actor2_id = int(actor2_id)
-					actor2 = sql_appdbproj(actor2_id)
+					actor2 = sql_appdbproj.check_actor(actor2_id)
 					if not actor2:
 						print(f"Error: Actor ID {actor2_id} does not exist. Please try again.")
 						continue  # Re-prompt for valid Actor 2 ID
