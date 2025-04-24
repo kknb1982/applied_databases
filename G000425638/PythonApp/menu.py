@@ -135,38 +135,42 @@ def menu():
 				# Prompt for Actor 1 ID
 					actor_id = input("Enter Actor 1 ID: ")
 					actor1 = neo4j_functions.check_actor_exists(actor_id)
-					if actor1 is None:
+					if not actor1:
 						print(f"Error: Actor ID {actor_id} does not exist. Please try again.")
 						continue  # Re-prompt for valid Actor 1 ID
 
 				# Prompt for Actor 2 ID
 					actor2_id = input("Enter Actor 2 ID: ")
 					actor2 = neo4j_functions.check_actor_exists(actor2_id)
-					if actor2 is None:
+					if not actor2:
 						print(f"Error: Actor ID {actor2_id} does not exist. Please try again.")
 						continue  # Re-prompt for valid Actor 2 ID
 
 				# If both IDs are valid, break out of the loop
 					break
 
-    # Check if either actor is already married and not divorced
-				married1 = neo4j_functions.is_actor_married(actor_id)
-				married2 = neo4j_functions.is_actor_married(actor2_id)
-
-				errors = []
-
-				if married1:
-					errors.append(f"Actor {actor_id} is already married")
-				if married2:
-					errors.append(f"Actor {actor2_id} is already married")
-				if errors:
-					for error in errors:
-						print(error)
+				# Check if the two actors are already married to each other
+				already_married = neo4j_functions.find_spouse(actor_id)
+				if any(spouse['SpouseID'] == actor2_id for spouse in already_married):
+					print(f"Error: Actor {actor_id} and Actor {actor2_id} are already married.")
 				else:
-					if neo4j_functions.create_marriage(actor_id, actor2_id):
-						print(f"Marriage created between Actor {actor_id} and Actor {actor2_id}.")
+				# Check if either actor is already married to someone else
+					married1 = neo4j_functions.is_actor_married(actor_id)
+					married2 = neo4j_functions.is_actor_married(actor2_id)
+					errors = []
+					if married1:
+						errors.append(f"Actor {actor_id} is already married to someone else.")
+					if married2:
+						errors.append(f"Actor {actor2_id} is already married to someone else.")
+					if errors:
+						for error in errors:
+							print(error)
 					else:
-						print(f"Error: Could not create marriage between Actor {actor_id} and Actor {actor2_id}.")
+					# Create the marriage if both actors are not married
+						if neo4j_functions.create_marriage(actor_id, actor2_id):
+							print(f"Marriage created between Actor {actor_id} and Actor {actor2_id}.")
+						else:
+							print(f"Error: Could not create marriage between Actor {actor_id} and Actor {actor2_id}.")
 				
 			elif choice == "6":
 				global studio_cache
