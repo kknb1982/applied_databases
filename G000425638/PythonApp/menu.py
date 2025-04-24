@@ -121,8 +121,8 @@ def menu():
 					married = neo4j_functions.find_spouse(actor_id)
 					if married:
 						print("\n ----------------------\nThese actors are married:")
-						for record in married:
-							print(f"Actor {actor_id} is married to Actor {record['SpouseID']}")
+						for spouse in married:
+							print(f"Actor {actor_id} is married to Actor {spouse['SpouseID']}")
 					else:
 						print("This actor is not married. No spouse found.")
 				
