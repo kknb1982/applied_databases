@@ -10,46 +10,51 @@ def get_birth_month(input_month):
 	month_lookup = {'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4, 'may': 5, 'jun': 6, 'jul': 7, 'aug': 8, 'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12}
 
 # If the input is a number check it is between 1 and 12
-	if input_month.isdigit():
-		month_num = int(input_month)
-		if 1 <= month_num <= 12:
+	while True:
+		if input_month.isdigit():
+			month_num = int(input_month)
+			if 1 <= month_num <= 12:
+				print(f"Valid input: Month number {month_num}")
+				return month_num
+			else:
+				print("Enter month: ")
+			
+		elif input_month[:3] in month_lookup:
+			month_num = month_lookup[input_month[:3]]
 			print(f"Valid input: Month number {month_num}")
 			return month_num
 		else:
-			print("Invalid input. Please enter a number (1–12) or the first three letters of a month (e.g., Jan, Feb, Mar).")
-			return None
-	elif input_month[:3] in month_lookup:
-		month_num = month_lookup[input_month[:3]]
-		print(f"Valid input: Month number {month_num}")
-		return month_num
-	else:
-		print("Invalid input. Please enter a number (1–12) or the first three letters of a month (e.g., Jan, Feb, Mar).")
-		return None
+			print("Enter month: ")
+		
 
 # Create the options menu
 def menu():
 	while True:
 		try:
-			options = "MoviesDB \n --------\n \n MENU \n ====\n 1 - View Directors & Film \n 2 - View Actors by Month of Birth \n 3 - Add New Actor \n 4 - View Married Actors \n 5 - Add Actor Marriage \n 6 - View Studios \n x - Exit Application"
+			options = "\nMENU \n ====\n 1 - View Directors & Film \n 2 - View Actors by Month of Birth \n 3 - Add New Actor \n 4 - View Married Actors \n 5 - Add Actor Marriage \n 6 - View Studios \n x - Exit Application"
 			print(options)
 
 			choice = input("Choice: ")
 
 			if choice == "1":
-				director_name = input("Enter the name of a director or part thereof: ")
+				director_name = input("Enter director name: ")
 				directors = sql_appdbproj.get_directors_by_name(director_name)
-				for director in directors:
-					print(director["DirectorName"], "|", director["FilmName"], "|", director["StudioName"])
-					break
+				print(f"Details for Director: {director_name} \n -------------------------------")
+				if not directors:
+					print("No directors found of that name.")
+					continue
 				else:
-					print(f"No results found for '{director_name}'.")
+					print("--------------------------------")
+					for director in directors:
+						print(director["DirectorName"], "|", director["FilmName"], "|", director["StudioName"])
+						break
 
 			elif choice == "2":
-				input_month = input("Enter the month of birth you are interested in (1-12 or Jan-Dec): ").strip().lower()
+				input_month = input("Enter month: ").strip().lower()
 				month_num = get_birth_month(input_month)
 				if month_num:
 					results_actor = sql_appdbproj.get_actor_by_month(month_num)
-					print(f"Details for Actors Born in {month_num}:")
+					print(f"Details for Actors Born in {input_month}:")
 					for actor in results_actor:
 						dob = actor["ActorDOB"]
 						if isinstance(dob, str):
@@ -61,10 +66,11 @@ def menu():
 						print(f"No results found for actors born in {month_num}.")	
 
 			elif choice == "3":
+				print("Add New Actor\n-----------------\n ")
 				actor_id = input("Enter Actor ID: ")
 				actor = sql_appdbproj.check_actor(actor_id)
 				if actor is not None:
-					print(f"Error: Actor ID {actor_id} already exists.")
+					print(f"*** ERROR ****: Actor ID {actor_id} already exists.")
 				else:
 					name = input("Enter Actor Name: ")
 					dob = input("Enter Actor Date of Birth (YYYY-MM-DD): ")
@@ -86,7 +92,7 @@ def menu():
 						country_id = input("Enter Country ID: ")
 						country = sql_appdbproj.check_country(country_id)					
 						if country is None:
-							print(f"Error: Country ID {country_id} does not exist.")
+							print(f"*** ERROR ***: Country ID {country_id} does not exist.")
 						else:
 							break
 
@@ -106,7 +112,7 @@ def menu():
 						break
 			
 			elif choice == "4":
-				actor_id = input("Enter the Actor ID to check for marriages: ")
+				actor_id = input("ACtor ID: ")
 				actor = menu5_add_marriage.check_actor_exists(int(actor_id))
 				if actor is None:
 					print(f"Error: Actor ID {actor_id} does not exist.")
@@ -114,7 +120,7 @@ def menu():
 				else:
 					married = menu4_married.find_spouse(actor_id)
 					if married:
-						print("These actors are married:")
+						print("\n ----------------------\nThese actors are married:")
 						actor = sql_appdbproj.get_actor_by_id(actor_id)
 						print(f"{actor['ActorID']} | {actor['ActorName']}")
 						for record in married:
@@ -125,42 +131,51 @@ def menu():
 						# Check if the actor has been divorced
 						divorced = menu5_add_marriage.was_divorced(actor_id)
 						if divorced:
-							print(f"Actor {actor_id} has been divorced.")
+							print(f"This has been divorced.")
 						else:
 							print(f"Actor {actor_id} has not been divorced.")
 					else:
-						print(f"Actor {actor_id} is not married.")
+						print(f"This actor is not married.")
 				
 			elif choice == "5":
-				actor_id = input("Enter the Actor ID to check for marriages: ")
-				actor1 = menu5_add_marriage.check_actor_exists(actor_id)
-				if actor1 is None:
-					print(f"Error: Actor ID {actor_id} does not exist.")
-					break
-				else:
-					actor2_id = input("Enter the second Actor ID to check for marriages: ")
+				while True:
+				# Prompt for Actor 1 ID
+					actor_id = input("Enter Actor 1 ID: ")
+					actor1 = menu5_add_marriage.check_actor_exists(actor_id)
+					if actor1 is None:
+						print(f"Error: Actor ID {actor_id} does not exist. Please try again.")
+						continue  # Re-prompt for valid Actor 1 ID
+
+				# Prompt for Actor 2 ID
+					actor2_id = input("Enter Actor 2 ID: ")
 					actor2 = menu5_add_marriage.check_actor_exists(actor2_id)
 					if actor2 is None:
-						print(f"Error: Actor ID {actor2_id} does not exist.")
-						break
+						print(f"Error: Actor ID {actor2_id} does not exist. Please try again.")
+						continue  # Re-prompt for valid Actor 2 ID
+
+				# If both IDs are valid, break out of the loop
+					break
+
+    # Check if either actor is already married and not divorced
+				married1 = menu5_add_marriage.is_actor_married(actor_id)
+				married2 = menu5_add_marriage.is_actor_married(actor2_id)
+				divorced1 = menu5_add_marriage.was_divorced(actor_id)
+				divorced2 = menu5_add_marriage.was_divorced(actor2_id)
+
+				errors = []
+
+				if married1 and not divorced1:
+					errors.append(f"Actor {actor_id} is already married and hasn't been divorced.")
+				if married2 and not divorced2:
+					errors.append(f"Actor {actor2_id} is already married and hasn't been divorced.")
+				if errors:
+					for error in errors:
+						print(error)
+				else:
+					if menu5_add_marriage.create_marriage(actor_id, actor2_id):
+						print(f"Marriage created between Actor {actor_id} and Actor {actor2_id}.")
 					else:
-						married1 = menu5_add_marriage.is_actor_married(actor_id)
-						married2 = menu5_add_marriage.is_actor_married(actor2_id)
-						divorced1 = menu5_add_marriage.was_divorced(actor_id)
-						divorced2 = menu5_add_marriage.was_divorced(actor2_id)
-						errors = []
-						if married1 and not divorced1:
-							errors.append(f"Actor {actor_id} is already married and hasn't been divorced.")
-						if married2 and not divorced2:
-							errors.append(f"Actor {actor2_id} is already married and hasn't been divorced.")
-						if errors:
-							for error in errors:
-								print(error)
-						else:
-							if menu5_add_marriage.create_marriage(actor_id, actor2_id):
-								print(f"Marriage created between Actor {actor_id} and Actor {actor2_id}.")
-							else:
-								print(f"Error: Could not create marriage between Actor {actor_id} and Actor {actor2_id}.")
+						print(f"Error: Could not create marriage between Actor {actor_id} and Actor {actor2_id}.")
 				
 			elif choice == "6":
 				global studio_cache
