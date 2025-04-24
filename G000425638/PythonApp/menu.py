@@ -134,6 +134,7 @@ def menu():
 				while True:
 				# Prompt for Actor 1 ID
 					actor_id = input("Enter Actor 1 ID: ")
+					actor_id = int(actor_id)
 					actor1 = neo4j_functions.check_actor_exists(actor_id)
 					if not actor1:
 						print(f"Error: Actor ID {actor_id} does not exist. Please try again.")
@@ -141,6 +142,7 @@ def menu():
 
 				# Prompt for Actor 2 ID
 					actor2_id = input("Enter Actor 2 ID: ")
+					actor2_id = int(actor2_id)
 					actor2 = neo4j_functions.check_actor_exists(actor2_id)
 					if not actor2:
 						print(f"Error: Actor ID {actor2_id} does not exist. Please try again.")
