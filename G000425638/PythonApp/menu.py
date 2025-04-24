@@ -113,7 +113,8 @@ def menu():
 			
 			elif choice == "4":
 				actor_id = input("Actor ID: ")
-				actor = neo4j_functions.check_actor_exists(int(actor_id))
+				actor_id = int(actor_id)
+				actor = neo4j_functions.check_actor_exists(actor_id)
 				if not actor:
 					print(f"Error: Actor ID {actor_id} does not exist.")
 					continue
