@@ -59,6 +59,8 @@ def find_spouse(actor_id):
         print("DEBUG married:", result)
         return result
 
+
+    
 def driver_close():
     if driver:
         driver.close()
