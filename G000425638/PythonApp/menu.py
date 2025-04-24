@@ -1,6 +1,5 @@
 import sql_appdbproj
-import menu4_married
-import menu5_add_marriage
+import neo4j_functions
 
 
 from datetime import datetime
@@ -114,12 +113,12 @@ def menu():
 			
 			elif choice == "4":
 				actor_id = input("Actor ID: ")
-				actor = menu5_add_marriage.check_actor_exists(int(actor_id))
+				actor = neo4j_functions.check_actor_exists(int(actor_id))
 				if actor is None:
 					print(f"Error: Actor ID {actor_id} does not exist.")
 					break
 				else:
-					married = menu4_married.find_spouse(actor_id)
+					married = neo4j_functions.find_spouse(actor_id)
 					if married:
 						print("\n ----------------------\nThese actors are married:")
 						actor = sql_appdbproj.get_actor_by_id(actor_id)
@@ -130,7 +129,7 @@ def menu():
 							print(f"{spouse['ActorID']} | {spouse['ActorName']}")
 						
 						# Check if the actor has been divorced
-						divorced = menu5_add_marriage.was_divorced(actor_id)
+						divorced = neo4j_functions.was_divorced(actor_id)
 						if divorced:
 							print(f"This has been divorced.")
 						else:
@@ -142,14 +141,14 @@ def menu():
 				while True:
 				# Prompt for Actor 1 ID
 					actor_id = input("Enter Actor 1 ID: ")
-					actor1 = menu5_add_marriage.check_actor_exists(actor_id)
+					actor1 = neo4j_functions.check_actor_exists(actor_id)
 					if actor1 is None:
 						print(f"Error: Actor ID {actor_id} does not exist. Please try again.")
 						continue  # Re-prompt for valid Actor 1 ID
 
 				# Prompt for Actor 2 ID
 					actor2_id = input("Enter Actor 2 ID: ")
-					actor2 = menu5_add_marriage.check_actor_exists(actor2_id)
+					actor2 = neo4j_functions.check_actor_exists(actor2_id)
 					if actor2 is None:
 						print(f"Error: Actor ID {actor2_id} does not exist. Please try again.")
 						continue  # Re-prompt for valid Actor 2 ID
@@ -158,10 +157,10 @@ def menu():
 					break
 
     # Check if either actor is already married and not divorced
-				married1 = menu5_add_marriage.is_actor_married(actor_id)
-				married2 = menu5_add_marriage.is_actor_married(actor2_id)
-				divorced1 = menu5_add_marriage.was_divorced(actor_id)
-				divorced2 = menu5_add_marriage.was_divorced(actor2_id)
+				married1 = neo4j_functions.is_actor_married(actor_id)
+				married2 = neo4j_functions.is_actor_married(actor2_id)
+				divorced1 = neo4j_functions.was_divorced(actor_id)
+				divorced2 = neo4j_functions.was_divorced(actor2_id)
 
 				errors = []
 
@@ -173,7 +172,7 @@ def menu():
 					for error in errors:
 						print(error)
 				else:
-					if menu5_add_marriage.create_marriage(actor_id, actor2_id):
+					if neo4j_functions.create_marriage(actor_id, actor2_id):
 						print(f"Marriage created between Actor {actor_id} and Actor {actor2_id}.")
 					else:
 						print(f"Error: Could not create marriage between Actor {actor_id} and Actor {actor2_id}.")
@@ -196,7 +195,7 @@ def menu():
 				except Exception as e:
 					print(f"(Optional) Could not close SQL connection: {e}")
 				try:
-					menu5_add_marriage.driver.close()
+					neo4j_functions.driver.close()
 				except Exception as e:
 					print(f"(Optional) Could not close Neo4j driver: {e}")
 

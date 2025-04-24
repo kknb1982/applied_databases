@@ -49,6 +49,14 @@ def create_marriage(actor1id, actor2id):
             """, id1=actor1id, id2=actor2id))
         return True
 
+def find_spouse(actor_id):
+    with driver.session() as session:
+        result = session.execute_read(lambda tx: tx.run(
+            """
+            MATCH (a:Actor {ActorID: $id})-[:MARRIED_TO]-(spouse:Actor)
+            RETURN spouse.ActorID AS SpouseID
+            """, id=actor_id).data())
+        return result
 
 def driver_close():
     if driver:
