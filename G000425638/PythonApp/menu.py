@@ -30,10 +30,10 @@ def get_birth_month(input_month):
 def menu():
 	while True:
 		try:
-			options = "MENU \n 1 - View Directors & Film \n 2 - View Actors by Month of Birth \n 3 - Add New Actor \n 4 - View Married Actors \n 5 - Add Actor Marriage \n 6 - View Studios \n x - Exit Application"
+			options = "MoviesDB \n --------\n \n MENU \n ====\n 1 - View Directors & Film \n 2 - View Actors by Month of Birth \n 3 - Add New Actor \n 4 - View Married Actors \n 5 - Add Actor Marriage \n 6 - View Studios \n x - Exit Application"
 			print(options)
 
-			choice = input("Choose a menu option: ")
+			choice = input("Choice: ")
 
 			if choice == "1":
 				director_name = input("Enter the name of a director or part thereof: ")
