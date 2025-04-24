@@ -152,15 +152,13 @@ def menu():
     # Check if either actor is already married and not divorced
 				married1 = neo4j_functions.is_actor_married(actor_id)
 				married2 = neo4j_functions.is_actor_married(actor2_id)
-				divorced1 = neo4j_functions.was_divorced(actor_id)
-				divorced2 = neo4j_functions.was_divorced(actor2_id)
 
 				errors = []
 
-				if married1 and not divorced1:
-					errors.append(f"Actor {actor_id} is already married and hasn't been divorced.")
-				if married2 and not divorced2:
-					errors.append(f"Actor {actor2_id} is already married and hasn't been divorced.")
+				if married1:
+					errors.append(f"Actor {actor_id} is already married")
+				if married2:
+					errors.append(f"Actor {actor2_id} is already married")
 				if errors:
 					for error in errors:
 						print(error)
