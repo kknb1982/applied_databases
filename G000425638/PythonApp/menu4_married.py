@@ -6,11 +6,11 @@ password = "neo4jneo4j"
 driver = GraphDatabase.driver(uri, auth=(username, password))
 
 def find_spouse(actor_id):
-    query = """
-    MATCH (a:Actor {ActorID: $actorId})-[:MARRIED_TO]-(spouse:Actor)
-    RETURN a.ActorID AS ActorID, spouse.ActorID AS SpouseID
-    """
     with driver.session() as session:
-        result = session.run(query, actorId=int(actor_id))
-        return list(result)
+        result = session.execute_read(lambda tx: tx.run(
+            """
+            MATCH (a:Actor {ActorID: $id})-[:MARRIED_TO]-(spouse:Actor)
+            RETURN spouse.ActorID AS SpouseID, spouse.ActorName AS SpouseName
+            """, id=actor_id).data())
+        return result  # Returns a list of spouses
 
