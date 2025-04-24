@@ -116,7 +116,7 @@ def menu():
 				actor = neo4j_functions.check_actor_exists(int(actor_id))
 				if not actor:
 					print(f"Error: Actor ID {actor_id} does not exist.")
-					break
+					continue
 				else:
 					married = neo4j_functions.find_spouse(actor_id)
 					if married:
@@ -128,13 +128,13 @@ def menu():
 							spouse = sql_appdbproj.get_actor_by_id(spouse_id)
 							print(f"{spouse['ActorID']} | {spouse['ActorName']}")
 						
-						# Check if the actor has been divorced
-						divorced = neo4j_functions.was_divorced(actor_id)
-						if divorced:
-							print(f"This has been divorced.")
-						else:
-							print(f"Actor {actor_id} has not been divorced.")
 					else:
+						print("This actor is not married")
+
+					divorced = neo4j_functions.was_divorced(actor_id)
+					if divorced:
+						print(f"This actor has been divorced.")
+					elif not married:
 						print(f"This actor is not married.")
 				
 			elif choice == "5":
