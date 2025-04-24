@@ -1,3 +1,8 @@
+# Project: MoviesDB
+# Created: April 2025
+# Author: Kirstin Barnett
+# Description: This is the main file for the MoviesDB application. It initialises the applucation and imports the necessary modules.
+
 import menu
 
 con = None

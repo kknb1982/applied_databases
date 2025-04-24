@@ -1,14 +1,21 @@
+# Project: MoviesDB
+# Created: April 2025
+# Author: Kirstin Barnett
+# Description: This is the menu file for the MoviesDB application. It creates the menu and handles user input.
+
+# Import necessary modules
 import sql_appdbproj
 import neo4j_functions
-
-
 from datetime import datetime
+
+# Initialise global variables
 studio_cache = None
 
+# Function to get the birth month from user input. It accepts both numeric and string formats (e.g., "1", "jan", "February"). It validates the input and returns the corresponding month number (1-12). If the input is invalid, it prompts the user to enter a valid month until a correct input is provided.
 def get_birth_month(input_month):
 	month_lookup = {'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4, 'may': 5, 'jun': 6, 'jul': 7, 'aug': 8, 'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12}
 
-# If the input is a number check it is between 1 and 12
+	# If the input is a number, check it is between 1 and 12
 	while True:
 		if input_month.isdigit():
 			month_num = int(input_month)
@@ -17,7 +24,8 @@ def get_birth_month(input_month):
 				return month_num
 			else:
 				print("Enter month: ")
-			
+		
+		# If the input is a string, check if it is in the month_lookup dictionary
 		elif input_month[:3] in month_lookup:
 			month_num = month_lookup[input_month[:3]]
 			return month_num
@@ -25,10 +33,12 @@ def get_birth_month(input_month):
 			print("Enter month: ")
 		
 
-# Create the options menu
+# Options menu for the MoviesDB application. It provides a list of options for the user to choose from. Each option corresponds to a specific function in the application, such as viewing directors and films, adding new actors, viewing married actors, etc. The menu continues to display until the user chooses to exit the application.
+# The menu also handles user input and validates it. If the input is invalid, it prompts the user to enter a valid choice. It also handles exceptions that may occur during the execution of the menu options.
 def menu():
 	while True:
 		try:
+			# Diplay the menu options to the user and prompt for a choice
 			options = "\nMENU \n====\n 1 - View Directors & Film \n 2 - View Actors by Month of Birth \n 3 - Add New Actor \n 4 - View Married Actors \n 5 - Add Actor Marriage \n 6 - View Studios \n x - Exit Application"
 			print(options)
 
