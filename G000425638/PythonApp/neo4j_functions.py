@@ -56,7 +56,6 @@ def find_spouse(actor_id):
             MATCH (a:Actor {ActorID: $id})-[:MARRIED_TO]-(spouse:Actor)
             RETURN spouse.ActorID AS SpouseID
             """, id=actor_id).data())
-        print("DEBUG married:", result)
         return result
 
 
