@@ -2,7 +2,7 @@ import menu
 
 con = None
 driver = None
-studio_cache = None
+studio_cache = {}
 
 if __name__ == "__main__":
     menu.menu()
