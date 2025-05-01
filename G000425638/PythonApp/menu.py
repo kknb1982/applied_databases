@@ -4,7 +4,7 @@ import menu5_add_marriage
 
 
 from datetime import datetime
-studio_cache = None
+
 
 def get_birth_month(input_month):
 	month_lookup = {'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4, 'may': 5, 'jun': 6, 'jul': 7, 'aug': 8, 'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12}
