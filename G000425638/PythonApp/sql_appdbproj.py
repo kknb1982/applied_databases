@@ -118,6 +118,20 @@ def get_studios():
 	cursor.close()
 	return studio_cache
 
+def add_studio():
+	if (not con):
+		connect();
+	# Command to select the data from the table
+	sql = "INSERT INTO studio (StudioID, StudioName) VALUES (%s, %s)"
+	values = (studioname, studioid)
+	print(values)
+		
+
+	cursor	= con.cursor()
+	cursor.execute(sql)
+	studio_cache = cursor.fetchall()
+	cursor.close()
+	return studio_cache
 
 def close_connection():
 	global con
