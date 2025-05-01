@@ -158,25 +158,32 @@ def menu():
 							break
 				
 			elif choice == "6":
-				global studio_cache
-				# Check if the cache is empty
-				if studio_cache is None:
-					print("Fetching studio data from the database...")
-					studio_cache = sql_appdbproj.get_studios()
-				else:
-					print("Using cached studio data.")
+				studio_cache = sql_appdbproj.get_studio_cache()
 				for studio in studio_cache:
 						print(f"Studio ID: {studio['StudioID']} | Studio Name: {studio['StudioName']}")
 
+			elif choice == "7":
+				studio_cache = sql_appdbproj.get_studios()
+				studio_name = input("Enter the name of the studio: ")
+				sql_appdbproj.add_studio(studio_name)
+				print(f"Studio '{studio_name}' added to cache.")
+		
+				
 			elif choice == "x":
 				print("Exiting application...")
-				try:
-					sql_appdbproj.close_connection()
-				except Exception as e:
+				if studio-cache is not none:
+					try:
+						sql_appdbproj.save_studio_cache_to_db()
+					except Exception as e:
+						print("Error updating the studio cache)
+				else:
+					try:
+						sql_appdbproj.close_connection()
+					except Exception as e:
 					print(f"(Optional) Could not close SQL connection: {e}")
-				try:
+					try:
 					menu5_add_marriage.driver.close()
-				except Exception as e:
+					except Exception as e:
 					print(f"(Optional) Could not close Neo4j driver: {e}")
 
 				break
