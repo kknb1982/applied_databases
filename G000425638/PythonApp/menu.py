@@ -8,6 +8,7 @@ import sql_appdbproj
 import neo4j_functions
 from datetime import datetime
 
+studio_cache = None  # Initialize studio_cache to None
 
 # Function to get the birth month from user input. It accepts both numeric and string formats (e.g., "1", "jan", "February"). It validates the input and returns the corresponding month number (1-12). If the input is invalid, it prompts the user to enter a valid month until a correct input is provided.
 def get_birth_month(input_month):
@@ -41,6 +42,8 @@ def menu():
 			print(options)
 
 			choice = input("Choice: ")
+		except Exception as e:
+			print(f"An error occurred: {e}")
 
 			if choice == "1":
 				director_name = input("Enter director name: ")
@@ -185,15 +188,20 @@ def menu():
 				
 			elif choice == "6":
 			# Ensure studio_cache is initialized with the full list of studios
-				if studio_cache is None:
-		 			studio_cache = sql_appdbproj.get_studios()
+				try:
+					if studio_cache is None:
+						print("Fetching studio list from the database...")
+						studio_cache = sql_appdbproj.get_studios()
+						print(f"DEBUG: studio_cache initialized: {studio_cache}")
 					print("\nStudio List:")
 					for studio in studio_cache:
 						print(f"{studio['StudioID']} | {studio['StudioName']}")
+				except Exception as e:
+					print(f"Error fetching studio list: {e}")
 
 			elif choice == "7":
 				if studio_cache is None:
-		 			studio_cache = sql_appdbproj.get_studios()
+					studio_cache = sql_appdbproj.get_studios()
 				
 				studio_name = input("Enter the name of the studio: ")
 				sql_appdbproj.add_studio_to_cache(studio_name)
@@ -206,20 +214,20 @@ def menu():
 					try:
 						sql_appdbproj.save_studio_cache_to_db(studio_cache)
 						print("Studio cache successfully saved to the database.")
-    	    		except Exception as e:
-					print(f"Error updating the studio cache: {e}")
-    			else:
-        			print("No studio cache to save.")
-    			# Close connections
+					except Exception as e:
+						print(f"Error updating the studio cache: {e}")
+				else:
+					print("No studio cache to save.")
+				# Close connections
 				try:
 					sql_appdbproj.close_connection()
 				except Exception as e:
-        			print(f"(Optional) Could not close SQL connection: {e}")
-    			try:
-        			neo4j_functions.driver.close()
-    			except Exception as e:
-        			print(f"(Optional) Could not close Neo4j driver: {e}")
-    			break
+					print(f"(Optional) Could not close SQL connection: {e}")
+				try:
+					neo4j_functions.driver.close()
+				except Exception as e:
+					print(f"(Optional) Could not close Neo4j driver: {e}")
+				break
 
 			else:
 				print(f"Invalid choice. Please try again.")

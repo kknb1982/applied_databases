@@ -107,7 +107,7 @@ def show_added_actor(actor_id):
             
 def get_studios():
 	if (not con):
-		connect();
+		connect()
 	# Command to select the data from the table
 	sql = "SELECT StudioID, StudioName FROM studio ORDER BY StudioID ASC"
 	cursor	= con.cursor()

@@ -7,7 +7,8 @@ import menu
 
 con = None
 driver = None
-studio_cache = {}
+#
+
 
 print("MoviesDB \n------------")
 
