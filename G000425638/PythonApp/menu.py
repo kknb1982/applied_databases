@@ -36,7 +36,7 @@ def get_birth_month(input_month):
 # The menu also handles user input and validates it. If the input is invalid, it prompts the user to enter a valid choice. It also handles exceptions that may occur during the execution of the menu options.
 def menu():
 	global studio_cache
-	
+	studio_cache = []
 	while True:
 		try:
 			# Diplay the menu options to the user and prompt for a choice
@@ -190,23 +190,27 @@ def menu():
 		elif choice == "6":
 		# Ensure studio_cache is initialized with the full list of studios
 			try:
-				if studio_cache is None:
-					print("Fetching studio list from the database...")
-					studio_cache = sql_appdbproj.get_studios()
-					print(f"DEBUG: studio_cache initialized: {studio_cache}")
+				print("Fetching studio list from the database...")
+				studios = sql_appdbproj.get_studios()
 				print("\nStudio List:")
-				for studio in studio_cache:
+				for studio in studios:
 					print(f"{studio['StudioID']} | {studio['StudioName']}")
 			except Exception as e:
 				print(f"Error fetching studio list: {e}")
 
 		elif choice == "7":
-			if studio_cache is None:
-				studio_cache = sql_appdbproj.get_studios()
-			
 			studio_name = input("Enter the name of the studio: ")
-			sql_appdbproj.add_studio_to_cache(studio_cache,studio_name)
-			print(f"Studio '{studio_name}' added to cache.")
+			studio = sql_appdbproj.check_db_for_duplicate_studio(studio_name)
+			if studio is not None:
+				print(f"*** ERROR ***: Studio '{studio_name}' already exists.")
+				continue
+			else:
+				print(f"Studio '{studio_name}' does not exist. Getting next studio ID...")
+				max_studio_id = sql_appdbproj.fetch_next_studio_id()
+				print(f"Next Studio ID: {max_studio_id}")
+				print(f"Adding studio '{studio_name}' to the database...")
+				sql_appdbproj.add_studio_to_cache(max_studio_id,studio_name)
+				print(f"Studio '{studio_name}' added to cache.")
 		
 				
 		elif choice == "x":
