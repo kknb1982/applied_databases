@@ -35,10 +35,10 @@ def get_birth_month(input_month):
 # Options menu for the MoviesDB application. It provides a list of options for the user to choose from. Each option corresponds to a specific function in the application, such as viewing directors and films, adding new actors, viewing married actors, etc. The menu continues to display until the user chooses to exit the application.
 # The menu also handles user input and validates it. If the input is invalid, it prompts the user to enter a valid choice. It also handles exceptions that may occur during the execution of the menu options.
 def menu():
-    global studio_cache
-    
-    while True:
-        try:
+	global studio_cache
+	
+	while True:
+		try:
 			# Diplay the menu options to the user and prompt for a choice
 			options = "\nMENU \n====\n1 - View Directors & Film\n2 - View Actors by Month of Birth\n3 - Add New Actor\n4 - View Married Actors\n5 - Add Actor Marriage\n6 - View Studios\n7 - Add Studio\nx - Exit Application"
 			print(options)
@@ -205,7 +205,7 @@ def menu():
 				studio_cache = sql_appdbproj.get_studios()
 			
 			studio_name = input("Enter the name of the studio: ")
-			sql_appdbproj.add_studio_to_cache(studio_name)
+			studio_cache = sql_appdbproj.add_studio_to_cache(studio_name)
 			print(f"Studio '{studio_name}' added to cache.")
 		
 				

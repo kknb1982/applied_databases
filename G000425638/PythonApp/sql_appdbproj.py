@@ -118,12 +118,12 @@ def get_studios():
 
 	
 def add_studio_to_cache(studio_name):
-	global studio_cache
 	if studio_cache is None:
 		studio_cache = get_studios()
     # Create a new studio entry with a placeholder ID (e.g., None)
 	new_studio = {'StudioID': None, 'StudioName': studio_name}
 	studio_cache.append(new_studio)
+	return studio_cache
 
 def save_studio_cache_to_db(studio_cache):
     """Save the studio cache to the database."""
