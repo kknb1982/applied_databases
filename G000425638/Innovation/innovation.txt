@@ -1,3 +1,7 @@
 
 ## Menu 2
 Line 20 takes in only the first 3 letters of a text input
+
+
+## Menu 7
+A new menu item has been added to handle adding a new studio, this pairs with menu 6 view all studios.

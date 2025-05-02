@@ -110,14 +110,33 @@ def get_studios():
 		connect();
 	# Command to select the data from the table
 	sql = "SELECT StudioID, StudioName FROM studio ORDER BY StudioID ASC"
-		
-
 	cursor	= con.cursor()
 	cursor.execute(sql)
 	studio_cache = cursor.fetchall()
 	cursor.close()
 	return studio_cache
 
+def get_studio_cache():
+	global studio_cache
+	# Check if the cache is empty
+	if studio_cache is None:
+		print("Fetching studio data from the database...")
+		studio_cache = get_studios()
+		
+def add_studio(studioname):
+    new_studio = {'StudioName': studio_name}
+    studio_cache.append(new_studio)
+
+def save_studio_cache_to_db():
+	if (not con):
+		connect()
+	for studio in studio_cache:
+        # Insert studio into the database
+	sql = "INSERT INTO Studio (StudioName) VALUES (%s)"
+	values = (StudioName,)
+		cursor.execute(sql, values)
+		con.commit()
+	cursor.close()
 
 def close_connection():
 	global con

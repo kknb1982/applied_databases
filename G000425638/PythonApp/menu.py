@@ -8,8 +8,6 @@ import sql_appdbproj
 import neo4j_functions
 from datetime import datetime
 
-# Initialise global variables
-studio_cache = None
 
 # Function to get the birth month from user input. It accepts both numeric and string formats (e.g., "1", "jan", "February"). It validates the input and returns the corresponding month number (1-12). If the input is invalid, it prompts the user to enter a valid month until a correct input is provided.
 def get_birth_month(input_month):
@@ -185,21 +183,28 @@ def menu():
 							print(f"Error: Could not create marriage between Actor {actor_id} and Actor {actor2_id}.")
 				
 			elif choice == "6":
-				global studio_cache
-				# Check if the cache is empty
-				if studio_cache is None:
-					print("Fetching studio data from the database...")
-					studio_cache = sql_appdbproj.get_studios()
-				else:
-					print("Using cached studio data.")
+				studio_cache = sql_appdbproj.get_studio_cache()
 				for studio in studio_cache:
 						print(f"{studio['StudioID']} | {studio['StudioName']}")
 
+			elif choice == "7":
+				studio_cache = sql_appdbproj.get_studios()
+				studio_name = input("Enter the name of the studio: ")
+				sql_appdbproj.add_studio(studio_name)
+				print(f"Studio '{studio_name}' added to cache.")
+		
+				
 			elif choice == "x":
 				print("Exiting application...")
-				try:
-					sql_appdbproj.close_connection()
-				except Exception as e:
+				if studio-cache is not none:
+					try:
+						sql_appdbproj.save_studio_cache_to_db()
+					except Exception as e:
+						print("Error updating the studio cache")
+				else:
+					try:
+						sql_appdbproj.close_connection()
+					except Exception as e:
 					print(f"(Optional) Could not close SQL connection: {e}")
 				try:
 					neo4j_functions.driver.close()
