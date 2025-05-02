@@ -117,7 +117,7 @@ def get_studios():
 	return studios
 
 	
-def add_studio_to_cache(studio_name):
+def add_studio_to_cache(studio_cache, studio_name):
 	if studio_cache is None:
 		studio_cache = get_studios()
     # Create a new studio entry with a placeholder ID (e.g., None)
