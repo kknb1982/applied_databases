@@ -4,7 +4,7 @@ con = None
 
 def connect():
 	global con
-	con = pymysql.connect(host='localhost', database='appdbproj', user='root', password='root', cursorclass=pymysql.cursors.DictCursor) 
+	con = pymysql.connect(host='localhost', database='appdbproj', user='root', password='', cursorclass=pymysql.cursors.DictCursor) 
 
 # Get directors by name function
 def get_directors_by_name(director_name):
@@ -112,31 +112,32 @@ def get_studios():
 	sql = "SELECT StudioID, StudioName FROM studio ORDER BY StudioID ASC"
 	cursor	= con.cursor()
 	cursor.execute(sql)
-	studio_cache = cursor.fetchall()
+	studios = cursor.fetchall()
 	cursor.close()
-	return studio_cache
+	return studios
 
-def get_studio_cache():
+	
+def add_studio_to_cache(studio_name):
 	global studio_cache
-	# Check if the cache is empty
 	if studio_cache is None:
-		print("Fetching studio data from the database...")
 		studio_cache = get_studios()
-		
-def add_studio(studioname):
-    new_studio = {'StudioName': studio_name}
-    studio_cache.append(new_studio)
+    # Create a new studio entry with a placeholder ID (e.g., None)
+	new_studio = {'StudioID': None, 'StudioName': studio_name}
+	studio_cache.append(new_studio)
 
-def save_studio_cache_to_db():
-	if (not con):
-		connect()
-	for studio in studio_cache:
-        # Insert studio into the database
-	sql = "INSERT INTO Studio (StudioName) VALUES (%s)"
-	values = (StudioName,)
-		cursor.execute(sql, values)
-		con.commit()
-	cursor.close()
+def save_studio_cache_to_db(studio_cache):
+    """Save the studio cache to the database."""
+    if (not con):
+        connect()
+    cursor = con.cursor()
+    for studio in studio_cache:
+        # Only insert studios that do not have an ID (i.e., new studios)
+        if studio['StudioID'] is None:
+            sql = "INSERT INTO Studio (StudioName) VALUES (%s)"
+            values = (studio['StudioName'],)
+            cursor.execute(sql, values)
+    con.commit()
+    cursor.close()
 
 def close_connection():
 	global con

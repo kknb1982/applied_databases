@@ -37,7 +37,7 @@ def menu():
 	while True:
 		try:
 			# Diplay the menu options to the user and prompt for a choice
-			options = "\nMENU \n====\n 1 - View Directors & Film \n 2 - View Actors by Month of Birth \n 3 - Add New Actor \n 4 - View Married Actors \n 5 - Add Actor Marriage \n 6 - View Studios \n x - Exit Application"
+			options = "\nMENU \n====\n 1 - View Directors & Film \n 2 - View Actors by Month of Birth \n 3 - Add New Actor \n 4 - View Married Actors \n 5 - Add Actor Marriage \n 6 - View Studios \n 7 - Add Studio \n x - Exit Application"
 			print(options)
 
 			choice = input("Choice: ")
@@ -50,7 +50,7 @@ def menu():
 					print("No directors found of that name.")
 					continue
 				else:
-					print("--------------------------------")
+					print("------------------")
 					for director in directors:
 						print(director["DirectorName"], "|", director["FilmName"], "|", director["StudioName"])
 						break
@@ -67,9 +67,9 @@ def menu():
 							dob = datetime.strptime(dob, '%Y-%m-%d')  # Convert string to datetime
 						formatted_dob = dob.strftime('%d-%m-%Y')  # Format the date						dob = actor["ActorDOB"]
 						print(actor["ActorName"], "|", formatted_dob, "|", actor["ActorGender"])
-						break
 					else:
-						print(f"No results found for actors born in {month_num}.")	
+						if not results_actor:
+							print(f"No results found for actors born in {month_num}.")	
 
 			elif choice == "3":
 				print("Add New Actor\n-----------------\n ")
@@ -94,7 +94,8 @@ def menu():
 					while gender not in ['Male', 'Female', 'M', 'F']:
 						print("Invalid gender. Please enter 'M', 'F', 'Male', or 'Female'.")
 						gender = input("Enter Actor Gender (M/F): ")
-						gender = "Male" if gender in ['M', 'Male'] else "Female"
+					
+					gender = "Male" if gender in ['M', 'Male'] else "Female"
 					
 					while True:
 						country_id = input("Enter Country ID: ")
@@ -183,38 +184,43 @@ def menu():
 							print(f"Error: Could not create marriage between Actor {actor_id} and Actor {actor2_id}.")
 				
 			elif choice == "6":
-				studio_cache = sql_appdbproj.get_studio_cache()
-				for studio in studio_cache:
+			# Ensure studio_cache is initialized with the full list of studios
+				if studio_cache is None:
+		 			studio_cache = sql_appdbproj.get_studios()
+					print("\nStudio List:")
+					for studio in studio_cache:
 						print(f"{studio['StudioID']} | {studio['StudioName']}")
 
 			elif choice == "7":
-				studio_cache = sql_appdbproj.get_studios()
+				if studio_cache is None:
+		 			studio_cache = sql_appdbproj.get_studios()
+				
 				studio_name = input("Enter the name of the studio: ")
-				sql_appdbproj.add_studio(studio_name)
+				sql_appdbproj.add_studio_to_cache(studio_name)
 				print(f"Studio '{studio_name}' added to cache.")
 		
 				
 			elif choice == "x":
 				print("Exiting application...")
-				if studio-cache is not none:
+				if studio_cache is not None:
 					try:
-						sql_appdbproj.save_studio_cache_to_db()
-					except Exception as e:
-						print("Error updating the studio cache")
-				else:
-					try:
-						sql_appdbproj.close_connection()
-					except Exception as e:
-					print(f"(Optional) Could not close SQL connection: {e}")
+						sql_appdbproj.save_studio_cache_to_db(studio_cache)
+						print("Studio cache successfully saved to the database.")
+    	    		except Exception as e:
+					print(f"Error updating the studio cache: {e}")
+    			else:
+        			print("No studio cache to save.")
+    			# Close connections
 				try:
-					neo4j_functions.driver.close()
+					sql_appdbproj.close_connection()
 				except Exception as e:
-					print(f"(Optional) Could not close Neo4j driver: {e}")
-
-				break
+        			print(f"(Optional) Could not close SQL connection: {e}")
+    			try:
+        			neo4j_functions.driver.close()
+    			except Exception as e:
+        			print(f"(Optional) Could not close Neo4j driver: {e}")
+    			break
 
 			else:
 				print(f"Invalid choice. Please try again.")
 
-		except Exception as e:
-			print(f"An error occurred: {e}")
