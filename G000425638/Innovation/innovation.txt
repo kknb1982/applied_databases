@@ -4,4 +4,4 @@ Line 20 takes in only the first 3 letters of a text input
 
 
 ## Menu 7
-A new menu item has been added to handle adding a new studio, this pairs with menu 6 view all studios.
+A new menu item has been added to handle adding a new studio, this pairs with menu 6 view all studios. The menu asks for the user to input the name of a studio, if this matches a name already in the database an error is returned. If the name is new, it is saved to the studio cache. This cache will be saved when the programme is exited and at this point the next available StudioID is assigned.
