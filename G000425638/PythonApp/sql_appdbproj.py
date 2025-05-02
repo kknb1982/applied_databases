@@ -128,23 +128,12 @@ def check_db_for_duplicate_studio(studio_name):
 	cursor.close()
 	return duplicate_studio
 
-def fetch_next_studio_id():
-	if (not con):
-		connect()
-	# Command to select the data from the table
-	sql = "SELECT MAX(StudioID) AS MaxStudioID FROM studio"
-	cursor = con.cursor()
-	cursor.execute(sql)
-	max_studio_id = cursor.fetchone()
-	cursor.close()
-	return max_studio_id['MaxStudioID'] + 1 if max_studio_id['MaxStudioID'] is not None else 1
-
-def add_studio_to_cache(studio_name, max_studio_id):
+def add_studio_to_cache(studio_name):
 	global studio_cache
 	if studio_cache is None:
 		studio_cache = []
 	
-	new_studio = {'StudioID': max_studio_id, 'StudioName': studio_name}
+	new_studio = {'StudioID': None, 'StudioName': studio_name}
 	studio_cache.append(new_studio)
 	return studio_cache
 

@@ -205,11 +205,8 @@ def menu():
 				print(f"*** ERROR ***: Studio '{studio_name}' already exists.")
 				continue
 			else:
-				print(f"Studio '{studio_name}' does not exist. Getting next studio ID...")
-				max_studio_id = sql_appdbproj.fetch_next_studio_id()
-				print(f"Next Studio ID: {max_studio_id}")
 				print(f"Adding studio '{studio_name}' to the database...")
-				sql_appdbproj.add_studio_to_cache(max_studio_id,studio_name)
+				sql_appdbproj.add_studio_to_cache(studio_name)
 				print(f"Studio '{studio_name}' added to cache.")
 		
 				
