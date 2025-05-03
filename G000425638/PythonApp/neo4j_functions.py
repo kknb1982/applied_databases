@@ -1,5 +1,21 @@
 from neo4j import GraphDatabase
+import subprocess
+import time
 
+
+
+def start_neo4j():
+    try:
+        print("Starting Neo4j database...")
+        subprocess.run(["neo4j-admin", "start"], check=True)
+        print("Neo4j database started successfully.")
+        time.sleep(10)  # Wait for a few seconds to ensure Neo4j is up
+    except subprocess.CalledProcessError as e:
+        print(f"Error starting Neo4j: {e}")
+        raise
+
+start_neo4j()
+    
 uri = "bolt://localhost:7687"
 username = "neo4j"
 password = "neo4jneo4j"
