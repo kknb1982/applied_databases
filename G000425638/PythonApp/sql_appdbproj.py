@@ -55,7 +55,6 @@ def check_actor(actor_id):
 	results_actor = cursor.fetchone()
 	cursor.close()
 	return results_actor
-	
 
 
 def check_country(country_id):
@@ -72,8 +71,6 @@ def check_country(country_id):
 	results_country = cursor.fetchone()
 	cursor.close()
 	return results_country
-
-
 
 def add_actor(actor_id, name, dob, gender, country_id):
 # Connect to SQL
@@ -92,7 +89,7 @@ def add_actor(actor_id, name, dob, gender, country_id):
 def show_added_actor(actor_id):
 # Connect to SQL
 	if (not con):
-		connect();
+		connect()
 	## Retrieve the new actor's ID from the database
 	sql = "SELECT * FROM actor WHERE ActorID = %s"
 	value = (actor_id,)  
@@ -128,10 +125,9 @@ def check_db_for_duplicate_studio(studio_name):
 	cursor.close()
 	return duplicate_studio
 
-def add_studio_to_cache(studio_name):
-	global studio_cache
+def add_studio_to_cache(studio_cache,studio_name):
 	if studio_cache is None:
-		studio_cache = []
+		studio_cache = get_studios()
 	
 	new_studio = {'StudioID': None, 'StudioName': studio_name}
 	studio_cache.append(new_studio)

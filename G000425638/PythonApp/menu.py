@@ -8,8 +8,6 @@ import sql_appdbproj
 import neo4j_functions
 from datetime import datetime
 
-studio_cache = None  # Initialize studio_cache to None
-
 # Function to get the birth month from user input. It accepts both numeric and string formats (e.g., "1", "jan", "February"). It validates the input and returns the corresponding month number (1-12). If the input is invalid, it prompts the user to enter a valid month until a correct input is provided.
 def get_birth_month(input_month):
 	month_lookup = {'jan': 1, 'feb': 2, 'mar': 3, 'apr': 4, 'may': 5, 'jun': 6, 'jul': 7, 'aug': 8, 'sep': 9, 'oct': 10, 'nov': 11, 'dec': 12}
@@ -199,14 +197,17 @@ def menu():
 				print(f"Error fetching studio list: {e}")
 
 		elif choice == "7":
+			if studio_cache is None:
+				studio_cache = []
+
 			studio_name = input("Enter the name of the studio: ")
 			studio = sql_appdbproj.check_db_for_duplicate_studio(studio_name)
 			if studio is not None:
 				print(f"*** ERROR ***: Studio '{studio_name}' already exists.")
 				continue
 			else:
-				print(f"Adding studio '{studio_name}' to the database...")
-				sql_appdbproj.add_studio_to_cache(studio_name)
+				print(f"Adding studio '{studio_name}' to the cache...")
+				studio_cache = sql_appdbproj.add_studio_to_cache(studio_cache,studio_name)
 				print(f"Studio '{studio_name}' added to cache.")
 		
 				

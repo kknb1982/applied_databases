@@ -7,10 +7,10 @@ import menu
 
 con = None
 driver = None
+studio_cache = None  # Initialize studio_cache to None
 
 
-
-print("MoviesDB \n------------")
+print("\n\nMoviesDB\n------------")
 
 if __name__ == "__main__":
     menu.menu()
