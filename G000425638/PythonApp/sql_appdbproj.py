@@ -70,6 +70,18 @@ def check_country(country_id):
 	cursor.close()
 	return results_country
 
+def get_countries():
+# Connect to SQL
+	if (not con):
+		connect()
+# Command to select the data from the table
+	sql = "SELECT CountryID, CountryName FROM country ORDER BY CountryID ASC"
+	cursor	= con.cursor()
+	cursor.execute(sql)
+	countries = cursor.fetchall()
+	cursor.close()
+	return countries
+
 def add_actor(actor_id, name, dob, gender, country_id):
 # Connect to SQL
 	if (not con):
