@@ -20,15 +20,17 @@ def get_birth_month(input_month):
 				print(f"Valid input: Month number {month_num}")
 				return month_num
 			else:
-				print("Enter month as 1 - 2 or Jan - Dec: ")
+				print("Invalid input enter month as 1 - 2 or Jan - Dec: ")
 		
 		# If the input is a string, check if it is in the month_lookup dictionary
-		elif input_month[:3] in month_lookup:
-			month_num = month_lookup[input_month[:3]]
+		elif input_month[:3].lower() in month_lookup:
+			month_num = month_lookup[input_month[:3].lower()]
 			return month_num
 		else:
-			print("Enter month: ")
-		
+			print("Invalid input enter month as 1 - 2 or Jan - Dec: ")
+
+		input_month = input("Enter month: ").strip()
+	
 
 # Options menu for the MoviesDB application. It provides a list of options for the user to choose from. Each option corresponds to a specific function in the application, such as viewing directors and films, adding new actors, viewing married actors, etc. The menu continues to display until the user chooses to exit the application.
 # The menu also handles user input and validates it. If the input is invalid, it prompts the user to enter a valid choice. It also handles exceptions that may occur during the execution of the menu options.
@@ -50,7 +52,7 @@ def menu():
 			directors = sql_appdbproj.get_directors_by_name(director_name)
 
 			if not directors:
-				print("No directors found of that name or containing those letters.")
+				print("\nNo directors found of that name or containing those letters.")
 				continue
 			else:
 				print(f"\n\nDetails for Director name containg: {director_name} \n --------")
@@ -59,19 +61,18 @@ def menu():
 					break
 		
 		elif choice == "2":
-			input_month = input("Enter month: ").strip().lower()
+			input_month = input("Enter month: ").strip()
 			month_num = get_birth_month(input_month)
 			if month_num:
 				results_actor = sql_appdbproj.get_actor_by_month(month_num)
-				print(f"Details for Actors Born in {input_month}:")
+				print(f"Details for Actors born in {input_month}:")
 				for actor in results_actor:
 					dob = actor["ActorDOB"]
 					if isinstance(dob, str):
 						dob = datetime.strptime(dob, '%Y-%m-%d')  # Convert string to datetime
 					formatted_dob = dob.strftime('%d-%m-%Y')  # Format the date
 					print(actor["ActorName"], "|", formatted_dob, "|", actor["ActorGender"])
-				else:
-					if not results_actor:
+				if not results_actor:
 						print(f"No results found for actors born in {month_num}.")	
 
 		elif choice == "3":
