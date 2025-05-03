@@ -211,7 +211,6 @@ def menu():
 				print(f"*** ERROR ***: Studio '{studio_name}' already exists.")
 				continue
 			else:
-				print(f"Adding studio '{studio_name}' to the cache...")
 				studio_cache = sql_appdbproj.add_studio_to_cache(studio_cache,studio_name)
 				print(f"Studio '{studio_name}' added to cache.")
 		
