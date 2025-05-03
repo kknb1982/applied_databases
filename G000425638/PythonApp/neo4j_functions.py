@@ -1,18 +1,21 @@
 from neo4j import GraphDatabase
 
-uri = "neo4j://localhost:7687"
+uri = "bolt://localhost:7687"
 username = "neo4j"
 password = "neo4jneo4j"
 driver = GraphDatabase.driver(uri, auth=(username, password))
 
+# Specify the database name
+database_name = "actorsMarried"
+
 def check_actor_exists(actor_id):
-    with driver.session() as session:
+    with driver.session(database=database_name) as session:
         result = session.execute_read(lambda tx: tx.run(
             "MATCH (a:Actor {ActorID: $id}) RETURN a", id=actor_id).single())
         return result is not None
     
 def is_actor_married(actor_id):
-    with driver.session() as session:
+    with driver.session(database=database_name) as session:
         result = session.execute_read(lambda tx: tx.run(
             """
             MATCH (a:Actor {ActorID: $id})-[:MARRIED_TO]-(:Actor)
@@ -21,7 +24,7 @@ def is_actor_married(actor_id):
         return result is not None
 
 def was_divorced(actor_id):
-    with driver.session() as session:
+    with driver.session(database=database_name) as session:
         result = session.execute_read(lambda tx: tx.run(
             """
             MATCH (a:Actor {ActorID: $id})-[:DIVORCED_FROM]-(b:Actor)
@@ -43,7 +46,7 @@ def get_valid_actor(prompt_text):
 def create_marriage(actor1id, actor2id):
     actor1id = int(actor1id)
     actor2id = int(actor2id)
-    with driver.session() as session:
+    with driver.session(database=database_name) as session:
         session.execute_write(lambda tx: tx.run(
             """
             MERGE (a:Actor {ActorID: $id1})
@@ -53,15 +56,13 @@ def create_marriage(actor1id, actor2id):
     return True
 
 def find_spouse(actor_id):
-    with driver.session() as session:
+    with driver.session(database=database_name) as session:
         result = session.execute_read(lambda tx: tx.run(
             """
             MATCH (a:Actor {ActorID: $id})-[:MARRIED_TO]-(spouse:Actor)
             RETURN spouse.ActorID AS SpouseID
             """, id=actor_id).data())
         return result
-
-
     
 def driver_close():
     if driver:
