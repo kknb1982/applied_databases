@@ -96,7 +96,7 @@ def menu():
 
 				gender = input("Enter Actor Gender: ").strip()
 				while gender not in ['Male', 'Female', 'M', 'F','m', 'f']:
-					print("Invalid gender. Please enter 'M', 'F', 'Male', or 'Female'.")
+					print("Invalid gender. Please enter 'M', 'F', 'm', 'f', 'Male', or 'Female'.")
 					gender = input("Enter Actor Gender (M/F): ")
 					
 				gender = "Male" if gender in ['M', 'Male', 'm'] else "Female"

@@ -4,7 +4,7 @@ con = None
 
 def connect():
 	global con
-	con = pymysql.connect(host='localhost', database='appdbproj', user='root', password='', cursorclass=pymysql.cursors.DictCursor) 
+	con = pymysql.connect(host='localhost', database='appdbproj', user='root', password='root', cursorclass=pymysql.cursors.DictCursor) 
 
 # Get directors by name function
 def get_directors_by_name(director_name):
@@ -89,7 +89,7 @@ def add_actor(actor_id, name, dob, gender, country_id):
 # Add actor
 	sql = "INSERT INTO Actor (ActorID, ActorName, ActorDOB, ActorGender, ActorCountryID) VALUES (%s, %s, %s, %s, %s)"
 	values = (actor_id, name, dob, gender, country_id)
-	print(values)
+
 #  Execute the command
 	cursor = con.cursor()
 	cursor.execute(sql, values)

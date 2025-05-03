@@ -1,5 +1,5 @@
-MATCH (loc:Location)-[:PART_OF]->(:Institution {name: "Atlantic Technological University"})
-MATCH (course:Course)-[:PROVIDED_BY]->(loc)
+MATCH (loc:Location)-[:PART_OF]->(:Institution {name: "Atlantic Technological University"}),
+	(course:Course)-[:PROVIDED_BY]->(loc)
 WHERE NOT (course)<-[:STUDIES]-(:Student)
 RETURN 
   loc.location AS Location, 
