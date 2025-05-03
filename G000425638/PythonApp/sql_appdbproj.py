@@ -9,7 +9,7 @@ def connect():
 # Get directors by name function
 def get_directors_by_name(director_name):
 	if (not con):
-			connect();
+			connect()
 
 # Command to select the data from the table
 	sql = "SELECT d.DirectorName, f.FilmName, s.StudioName FROM director d JOIN film f ON d.DirectorID = f.FilmDirectorID JOIN studio s ON f.FilmStudioID = s.StudioID WHERE d.DirectorName LIKE %s"
@@ -37,8 +37,6 @@ def get_actor_by_month(month_num):
 	results_actor = cursor.fetchall()
 	cursor.close()	
 	return results_actor
-
-
 
 
 def check_actor(actor_id):
