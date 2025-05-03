@@ -131,6 +131,7 @@ def add_studio_to_cache(studio_cache,studio_name):
 	
 	new_studio = {'StudioID': None, 'StudioName': studio_name}
 	studio_cache.append(new_studio)
+	print(f"Added studio to cache: {new_studio}")
 	return studio_cache
 
 def save_studio_cache_to_db(studio_cache):
