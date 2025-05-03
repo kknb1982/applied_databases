@@ -20,14 +20,14 @@ def get_birth_month(input_month):
 				print(f"Valid input: Month number {month_num}")
 				return month_num
 			else:
-				print("Invalid input enter month as 1 - 2 or Jan - Dec: ")
+				print("Invalid input enter month as 1 - 2 or Jan - Dec.")
 		
 		# If the input is a string, check if it is in the month_lookup dictionary
 		elif input_month[:3].lower() in month_lookup:
 			month_num = month_lookup[input_month[:3].lower()]
 			return month_num
 		else:
-			print("Invalid input enter month as 1 - 2 or Jan - Dec: ")
+			print("Invalid input enter month as 1 - 2 or Jan - Dec.")
 
 		input_month = input("Enter month: ").strip()
 	
@@ -106,6 +106,11 @@ def menu():
 					country = sql_appdbproj.check_country(country_id)					
 					if country is None:
 						print(f"*** ERROR ***: Country ID {country_id} does not exist.")
+						countries = sql_appdbproj.get_countries()
+						print("\nAvailable Country IDs:")
+						for country in countries:
+							print(f"{country['CountryID']} | {country['CountryName']}")
+						country_id = input("Enter Country ID: ")
 					else:
 						break
 
