@@ -20,14 +20,14 @@ def get_birth_month(input_month):
 				print(f"Valid input: Month number {month_num}")
 				return month_num
 			else:
-				print("Invalid input enter month as 1 - 2 or Jan - Dec.")
+				print("Invalid input enter month as 1 - 12 or Jan - Dec.")
 		
 		# If the input is a string, check if it is in the month_lookup dictionary
 		elif input_month[:3].lower() in month_lookup:
 			month_num = month_lookup[input_month[:3].lower()]
 			return month_num
 		else:
-			print("Invalid input enter month as 1 - 2 or Jan - Dec.")
+			print("Invalid input enter month as 1 - 12 or Jan - Dec.")
 
 		input_month = input("Enter month: ").strip()
 	
@@ -55,7 +55,7 @@ def menu():
 				print("\nNo directors found of that name or containing those letters.")
 				continue
 			else:
-				print(f"\n\nDetails for Director name containg: {director_name} \n --------")
+				print(f"\n\nDetails for Director name containing: {director_name} \n --------")
 				for director in directors:
 					print(director["DirectorName"], "|", director["FilmName"], "|", director["StudioName"])
 					break
@@ -65,7 +65,7 @@ def menu():
 			month_num = get_birth_month(input_month)
 			if month_num:
 				results_actor = sql_appdbproj.get_actor_by_month(month_num)
-				print(f"Details for Actors born in {input_month}:")
+				print(f"\nDetails for Actors born in {input_month}:")
 				for actor in results_actor:
 					dob = actor["ActorDOB"]
 					if isinstance(dob, str):
@@ -95,11 +95,11 @@ def menu():
 						dob = input("Enter Actor Date of Birth (YYYY-MM-DD): ")
 
 				gender = input("Enter Actor Gender: ").strip()
-				while gender not in ['Male', 'Female', 'M', 'F']:
+				while gender not in ['Male', 'Female', 'M', 'F','m', 'f']:
 					print("Invalid gender. Please enter 'M', 'F', 'Male', or 'Female'.")
 					gender = input("Enter Actor Gender (M/F): ")
 					
-				gender = "Male" if gender in ['M', 'Male'] else "Female"
+				gender = "Male" if gender in ['M', 'Male', 'm'] else "Female"
 					
 				while True:
 					country_id = input("Enter Country ID: ")
@@ -110,7 +110,6 @@ def menu():
 						print("\nAvailable Country IDs:")
 						for country in countries:
 							print(f"{country['CountryID']} | {country['CountryName']}")
-						country_id = input("Enter Country ID: ")
 					else:
 						break
 
@@ -122,7 +121,7 @@ def menu():
 					print(f"Actor ID: {new_actor['ActorID']}", "|", )
 					print(f"Actor Name: {new_actor['ActorName']}")
 					print(f"Actor DOB: {new_actor['ActorDOB']}")
-					print(f"Actor gender: {new_actor['ActorGender']}")
+					print(f"Actor Gender: {new_actor['ActorGender']}")
 					print(f"Actor Country ID: {new_actor['ActorCountryID']}")
 
 				else:
@@ -134,7 +133,7 @@ def menu():
 			actor_id = int(actor_id)
 			actor = neo4j_functions.check_actor_exists(actor_id)
 			if not actor:
-				print(f"Error: Actor ID {actor_id} does not exist.")
+				print(f"Error: Actor ID {actor_id} is not married.")
 				continue
 			else:
 				married = neo4j_functions.find_spouse(actor_id)
@@ -193,7 +192,6 @@ def menu():
 						print(f"Error: Could not create marriage between Actor {actor_id} and Actor {actor2_id}.")
 				
 		elif choice == "6":
-		# Ensure studio_cache is initialized with the full list of studios
 			try:
 				print("Fetching studio list from the database...")
 				studios = sql_appdbproj.get_studios()
@@ -242,5 +240,5 @@ def menu():
 			break
 
 		else:
-			print(f"Invalid choice. Please try again.")
+			print(f"\nInvalid choice. Please try again.")
 
