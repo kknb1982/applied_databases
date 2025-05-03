@@ -5,7 +5,10 @@ import time
 def start_neo4j():
     try:
         print("Starting Neo4j database in console mode...")
-        subprocess.run([r"C:\Users\appDB\Documents\neo4j-community-5.15.0-windows\neo4j-community-5.15.0\bin\neo4j.bat", "console"], check=True)
+        subprocess.Popen(
+            [r"C:\Users\appDB\Documents\neo4j-community-5.15.0-windows\neo4j-community-5.15.0\bin\neo4j.bat", 
+            "console"], stdout=subprocess.DEVNULL,  # Suppress output
+            stderr=subprocess.DEVNULL)
         print("Neo4j database started successfully.")
         time.sleep(10)  # Wait for a few seconds to ensure Neo4j is up
     except subprocess.CalledProcessError as e:
