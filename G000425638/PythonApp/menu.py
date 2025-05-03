@@ -20,7 +20,7 @@ def get_birth_month(input_month):
 				print(f"Valid input: Month number {month_num}")
 				return month_num
 			else:
-				print("Enter month: ")
+				print("Enter month as 1 - 2 or Jan - Dec: ")
 		
 		# If the input is a string, check if it is in the month_lookup dictionary
 		elif input_month[:3] in month_lookup:
@@ -38,7 +38,7 @@ def menu():
 	while True:
 		try:
 			# Diplay the menu options to the user and prompt for a choice
-			options = "\nMENU \n====\n1 - View Directors & Film\n2 - View Actors by Month of Birth\n3 - Add New Actor\n4 - View Married Actors\n5 - Add Actor Marriage\n6 - View Studios\n7 - Add Studio\nx - Exit Application"
+			options = "\nMENU \n====\n1 - View Directors & Films\n2 - View Actors by Month of Birth\n3 - Add New Actor\n4 - View Married Actors\n5 - Add Actor Marriage\n6 - View Studios\n7 - Add Studio\nx - Exit Application"
 			print(options)
 
 			choice = input("Choice: ")
@@ -48,15 +48,16 @@ def menu():
 		if choice == "1":
 			director_name = input("Enter director name: ")
 			directors = sql_appdbproj.get_directors_by_name(director_name)
-			print(f"Details for Director: {director_name} \n --------")
+
 			if not directors:
-				print("No directors found of that name.")
+				print("No directors found of that name or containing those letters.")
 				continue
 			else:
-				print("------------------")
+				print(f"\n\nDetails for Director name containg: {director_name} \n --------")
 				for director in directors:
 					print(director["DirectorName"], "|", director["FilmName"], "|", director["StudioName"])
 					break
+		
 		elif choice == "2":
 			input_month = input("Enter month: ").strip().lower()
 			month_num = get_birth_month(input_month)
@@ -67,7 +68,7 @@ def menu():
 					dob = actor["ActorDOB"]
 					if isinstance(dob, str):
 						dob = datetime.strptime(dob, '%Y-%m-%d')  # Convert string to datetime
-					formatted_dob = dob.strftime('%d-%m-%Y')  # Format the date						dob = actor["ActorDOB"]
+					formatted_dob = dob.strftime('%d-%m-%Y')  # Format the date
 					print(actor["ActorName"], "|", formatted_dob, "|", actor["ActorGender"])
 				else:
 					if not results_actor:

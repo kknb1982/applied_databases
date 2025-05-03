@@ -19,8 +19,8 @@ def get_directors_by_name(director_name):
 	cursor.execute(sql, ('%' + director_name + '%',))
 # Fetch the results
 	director_results = cursor.fetchall()
-	return director_results
 	cursor.close()
+	return director_results
 
 
 def get_actor_by_month(month_num):
