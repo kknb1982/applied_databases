@@ -2,12 +2,10 @@ from neo4j import GraphDatabase
 import subprocess
 import time
 
-
-
 def start_neo4j():
     try:
         print("Starting Neo4j database...")
-        subprocess.run(["neo4j-admin", "start"], check=True)
+        subprocess.run([r"C:\Users\appDB\Documents\neo4j-community-5.15.0-windows\neo4j-community-5.15.0\bin\neo4j.bat", "start"], check=True)
         print("Neo4j database started successfully.")
         time.sleep(10)  # Wait for a few seconds to ensure Neo4j is up
     except subprocess.CalledProcessError as e:
