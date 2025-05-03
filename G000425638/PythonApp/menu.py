@@ -206,7 +206,7 @@ def menu():
 				continue
 			else:
 				print(f"Adding studio '{studio_name}' to the database...")
-				sql_appdbproj.add_studio_to_cache(studio_name)
+				studio_cache = sql_appdbproj.add_studio_to_cache(studio_cache, studio_name)
 				print(f"Studio '{studio_name}' added to cache.")
 		
 				
